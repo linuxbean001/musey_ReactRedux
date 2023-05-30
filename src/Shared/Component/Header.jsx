@@ -37,6 +37,7 @@ function Header() {
         <SignUp onClose={closeModal} />
       )}
     </section>
+  
     </div>
   );
 }
