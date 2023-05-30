@@ -16,6 +16,7 @@ function Header() {
   };
 
   return (
+    <div>
     <section className="Menusection">
       <div className="container">
         <div className="menuHeader">
@@ -36,6 +37,7 @@ function Header() {
         <SignUp onClose={closeModal} />
       )}
     </section>
+    </div>
   );
 }
 
