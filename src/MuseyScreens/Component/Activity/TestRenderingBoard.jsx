@@ -1,8 +1,18 @@
 import React from "react";
 import "../../../Style.css";
 import BannerImage from "../../../Shared/Component/BannerImage";
+import { useNavigate } from "react-router-dom";
+
 
 function TestRenderingBoard() {
+
+   const navigate = useNavigate();
+
+  const handleClick = () =>{
+    navigate("/advance_render")
+  }
+
+
   return (
     <div>
       <div class="mainWraper">
@@ -16,9 +26,9 @@ function TestRenderingBoard() {
               </div>
               <div class="col-md-4">
                 <div class="trbwrap">
-                  <a href class="btn btn-primary">
+                  <button onClick={handleClick} class="btn btn-primary">
                     Add more images
-                  </a>
+                  </button>
                   <div class="dropdown">
                     <a
                       href="#"

@@ -18,16 +18,16 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<MainPage/>} />
-          <Route path="/signup" element={<SignUp/>} />
-          <Route path="/final_board" element={<FinalBoard/>} />
-          <Route path="/feedback_board" element={<FeedBackBoard/>}/>
-          <Route path="/request_board" element={<RequestBoard/>}/>
-          <Route path="/advance_render" element={<AdvanceRender/>}/>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/yourboard" element={<YourBoard />} />
           <Route path="/uploadboard" element={<UploadBoard />} />
           <Route path="/addimage" element={<AddImageBoard />} />
           <Route path="/testrender" element={<TestRenderingBoard />} />
+          <Route path="/advance_render" element={<AdvanceRender />} />
+          <Route path="/request_board" element={<RequestBoard />} />
+          <Route path="/feedback_board" element={<FeedBackBoard />} />
+          <Route path="/final_board" element={<FinalBoard />} />
         </Routes>
       </BrowserRouter>
     </div>
