@@ -8,7 +8,6 @@ import BottomSection from './BottomSection'
 function MainPage() {
   return (
   <div className="mainWraper">
-   
     <HeroSection/>
     <MidSection/>
     <BottomSection/>

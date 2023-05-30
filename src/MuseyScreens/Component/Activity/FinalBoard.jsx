@@ -19,7 +19,7 @@
 // import random06 from "../../../public/assests/random06.png";
 // import MLogoIcon from "../../../public/assests/MLogoIcon.png";
 
-// function Page8() {
+// function FinalBoard() {
 //   return (
 //     <div>
 //       <div class="mainWraper">
@@ -312,4 +312,4 @@
 //   );
 // }
 
-// export default Page8;
+// export default FinalBoard;

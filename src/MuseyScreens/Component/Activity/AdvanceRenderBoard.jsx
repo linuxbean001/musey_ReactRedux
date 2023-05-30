@@ -11,7 +11,7 @@
 // import Delete from "../../../public/assests/delete.png";
 
 
-// function Page5() {
+// function AdvanceRenderBoard() {
 //   return (
 //     <div>
 //       <div class="mainWraper">
@@ -181,4 +181,4 @@
 //   );
 // }
 
-// export default Page5;
+// export default AdvanceRenderBoard;

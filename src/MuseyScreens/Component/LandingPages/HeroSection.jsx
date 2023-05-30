@@ -8,7 +8,7 @@ const HeroSection = () => {
           <div className="col-sm-12 col-lg-6">
             <h1>A picture is worth a thousand words</h1>
             <p>Visual AI rendering is here. Jumpstart your inspiration today.</p>
-            <a href="#" className="btn btn-primary">
+            <a href="/yourboard" className="btn btn-primary">
               Get Started for free
             </a>
           </div>
