@@ -21,7 +21,7 @@
 
 
 
-// function FeedBackBoard() {
+// function Page7() {
 //   return (
 //     <div>
 //       <div class="mainWraper">
@@ -302,4 +302,4 @@
 //   );
 // }
 
-// export default FeedBackBoard;
+// export default Page7;

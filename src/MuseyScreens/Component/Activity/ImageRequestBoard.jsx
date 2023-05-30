@@ -4,7 +4,7 @@
 // import logo from "../../../public/assests/logo.png";
 // import MLogoIconP from "../../../public/assests/MLogoIcon-process.png";
 
-// function ImageRequestBoard() {
+// function Page6() {
 //   return (
 //     <div>
 //       <div class="mainWraper">
@@ -72,4 +72,4 @@
 //   );
 // }
 
-// export default ImageRequestBoard;
+// export default Page6;
