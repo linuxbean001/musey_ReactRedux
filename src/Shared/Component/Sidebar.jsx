@@ -9,7 +9,7 @@ function Sidebar() {
       <input type="checkbox" id="openSideMenu" className="openSideMenu" />
       <label for="openSideMenu" className="menuIconToggle">
         <span>
-          <img src={"../../../public/assests/HamburgerMenu.png"} />
+          <img src="assests/HamburgerMenu.png" />
         </span>
       </label>
       <nav>

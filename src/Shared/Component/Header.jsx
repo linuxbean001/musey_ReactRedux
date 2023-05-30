@@ -22,7 +22,7 @@ function Header() {
           <Sidebar />
           <div>
             <Link to="#" className="navbar-brand">
-              <img src={"../../../public/assests/logo.png"} alt="Logo" />
+              <img src={"assests/logo.png"} alt="Logo" />
             </Link>
           </div>
           <div>
