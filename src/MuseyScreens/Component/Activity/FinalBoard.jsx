@@ -1,6 +1,15 @@
-import React from "react";
-
+import React,{useState} from "react";
+import { Modal } from "react-bootstrap";
 function FinalBoard() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div>
       <div class="mainWraper">
@@ -69,10 +78,10 @@ function FinalBoard() {
                   <p>Are you satisfied with these results?</p>
                   <div class="satisfyicon">
                     <a href>
-                      <img src={'assests/satisfy.png'} />
+                      <img src={'assests/satisfy.png'}/>
                     </a>
                     <a href>
-                      <img src={'assests/Unsatisfy.png'} />
+                      <img src={'assests/Unsatisfy.png'}/>
                     </a>
                   </div>
                   <p class="mt-4">
@@ -91,24 +100,78 @@ function FinalBoard() {
               </div>
 
               {/* <!-- The Modal Second --> */}
-              <div class="modal modaldowload" id="myModal">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <a href class="downloadClose" data-bs-dismiss="modal">
-                      <img src={'assests/close.png'} />
-                    </a>
-                    <div class="modlbody">
-                      <img src={'assests/random09.png'} />
-                      <a href class="btn btn-primary downloadbtn">
-                        Download
-                      </a>
-                      <a href="#" class="sharetxt">
-                        Share
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+           
+              {/*<!-- The Modal Third -->*/}
+              <div class="modal continueEditImg" id="myModal">
+                 <div class="modal-dialog">
+                 <div class="modal-content">
+             
+                   {/*<!-- Modal Header -->*/}
+                   <div class="modal-header border-bottom-0">
+                     <h4 class="modal-title">What did you like about this image?</h4>
+                     <a href class="" data-bs-dismiss="modal"><img src= {'assests/close.png'}/></a>                                
+                     </div>
+             
+                   { /* <!-- Modal body -->*/}
+                     <div class="modal-body">
+                         <div class="row">
+                             <small class="show-results mb-3">Image 1 of 7</small>
+                             <div class="col-md-6">
+                                <div class="continuemodalboximg"><img src={'assests/random01.png'}/></div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="checkedfrm">
+                                   <label class="containercb">
+                                     <input type="checkbox"/>
+                                     <span class="checkmark"></span>
+                                   </label>
+                                   <span>Colors</span>
+                                </div>
+                                <div class="checkedfrm">
+                                 <label class="containercb">
+                                   <input type="checkbox"/>
+                                   <span class="checkmark"></span>
+                                 </label>
+                                 <span>Architecture</span>
+                              </div>
+                              <div class="checkedfrm">
+                                 <label class="containercb">
+                                   <input type="checkbox"/>
+                                   <span class="checkmark"></span>
+                                 </label>
+                                 <span>Shapes</span>
+                              </div>
+                              <div class="checkedfrm">
+                                 <label class="containercb">
+                                   <input type="checkbox"/>
+                                   <span class="checkmark"></span>
+                                 </label>
+                                 <span>Flowers</span>
+                              </div>
+                              <div class="checkedfrm">
+                                 <label class="containercb">
+                                   <input type="checkbox" id="myCheck" onclick="myFunction()"/>
+                                   <span class="checkmark"></span>
+                                 </label>
+                                 <span>Other :</span>
+                                
+                              </div>
+                              <div id="Other" style={{display:'none'}}>
+                                 <input type="text" placeholder="Triangle pattern" name="" />
+                             </div>
+                             <div class="c-btb-wrap">                                
+                                 <a href class="btn btn-primary">Next image</a>
+                                 <a href class="btn btn-primary primary-border">Done</a>
+                             </div>
+                             </div>
+                         </div>
+                     </div>
+             
+                   
+             
+                 </div>
+                 </div>
+             </div>
             </div>
             <div class="row">
               <div class="col-md-8">
