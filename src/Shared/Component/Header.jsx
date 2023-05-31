@@ -3,6 +3,8 @@ import "../../Style.css";
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 import SignUp from "./SignUp";
+import { useLocation } from 'react-router-dom';
+import FeedBackBoard from "../../MuseyScreens/Component/UserDashBoard/FeedBackBoard";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +16,9 @@ function Header() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
+  const location = useLocation();
+  const { pathname } = location;
+  console.log(pathname);
   return (
     <div>
       <section className="Menusection">
@@ -26,10 +30,17 @@ function Header() {
                 <img src={"assests/logo.png"} alt="Logo" />
               </Link>
             </div>
-            <div>
+            <div>{ pathname ==='/' ?
+         
               <button onClick={handleOpenModal} className="sign-in">
                 Sign in
-              </button>
+              </button> : 
+               <a href class="sign-in">
+                  <span class="userName">
+                  WW
+                  </span>
+                </a>
+                   }
             </div>
           </div>
         </div>

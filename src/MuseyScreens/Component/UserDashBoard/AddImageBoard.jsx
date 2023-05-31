@@ -2,6 +2,7 @@ import React from "react";
 import "../../../Style.css";
 import BannerImage from "../../../Shared/Component/BannerImage";
 import { useNavigate } from "react-router-dom";
+import { Modal } from "react-bootstrap";
 
 function AddImageBoard() {
   const navigate = useNavigate();
@@ -9,7 +10,6 @@ function AddImageBoard() {
   const handleClick = () => {
     navigate("/testrender");
   };
-
   return (
     <div>
       <div class="mainWraper">
@@ -40,6 +40,9 @@ function AddImageBoard() {
                   Next Page
                 </button>
               </div>
+
+
+              {/*  modal */}
               <div class="modal" id="myModal">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -106,6 +109,8 @@ function AddImageBoard() {
                   </div>
                 </div>
               </div>
+
+              {/* modal close */}
               <div class="row">
                 <div class="col-md-6">
                   <div class="sag-top">
