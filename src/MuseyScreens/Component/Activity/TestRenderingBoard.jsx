@@ -9,7 +9,7 @@ function TestRenderingBoard() {
    const navigate = useNavigate();
 
   const handleClick = () =>{
-    navigate("/advance_render")
+    navigate("/advancerender")
   }
 
 

@@ -7,7 +7,7 @@ function AdvanceRender() {
  const navigate = useNavigate();
 
   const handleClick = () =>{
-    navigate("/request_board")
+    navigate("/requestboard")
   }
 
   return (

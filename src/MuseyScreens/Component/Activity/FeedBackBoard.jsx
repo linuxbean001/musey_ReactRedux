@@ -7,7 +7,7 @@ function FeedBackBoard() {
   const navigate = useNavigate();
 
   const handleClick = () =>{
-    navigate("/final_board")
+    navigate("/finalboard")
   }
 
   return (

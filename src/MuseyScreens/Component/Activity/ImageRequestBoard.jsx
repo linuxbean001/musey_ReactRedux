@@ -6,7 +6,7 @@ function RequestBoard() {
   const navigate = useNavigate();
 
   const handleClick = () =>{
-    navigate("/feedback_board")
+    navigate("/feedbackboard")
   }
 
   return (
