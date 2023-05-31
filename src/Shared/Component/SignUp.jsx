@@ -5,7 +5,7 @@ import { Modal } from "react-bootstrap";
 function SignUp({ isModalOpen, handleCloseModal }) {
   return (
       <Modal size="lg" aria-labelledby="contained-modal-title-vcenter"
-      centered  show={isModalOpen} className="modal open">
+      centered  show={isModalOpen} className="modal open signinmd">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header border-bottom-0">

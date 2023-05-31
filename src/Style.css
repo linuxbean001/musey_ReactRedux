@@ -1237,8 +1237,9 @@ section.procesSection {
 
 /* sign-in css */
 .signinmd .modal-dialog {
-  max-width: 660px;
-  margin-top: 100px;
+  max-width: 820px;
+  margin-top: 10px;
+  padding-top: 20px;
 }
 
 .signinmd .modal-content {
@@ -1247,7 +1248,7 @@ section.procesSection {
 }
 
 .signinmd .modal-content .modal-header {
-  padding: 20px;
+  padding: -10px;
 }
 
 .signinmd h4.modal-title {
