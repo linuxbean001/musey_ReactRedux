@@ -1,5 +1,6 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
+
 function FinalBoard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -23,53 +24,53 @@ function FinalBoard() {
               </div>
               <div class="col-6 col-xl-3">
                 <div class="showreslutboximg">
-                  <img src={'assests/random05.png'} />
+                  <img src={"assests/random05.png"} />
                   <a
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     href
                     class="onovrshow"
                   >
-                    <img src={'assests/download.png'} />
+                    <img src={"assests/download.png"} />
                   </a>
                 </div>
               </div>
               <div class="col-6 col-xl-3">
                 <div class="showreslutboximg">
-                  <img src={'assests/random05.png'} />
+                  <img src={"assests/random05.png"} />
                   <a
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     href
                     class="onovrshow"
                   >
-                    <img src={'assests/download.png'} />
+                    <img src={"assests/download.png"} />
                   </a>
                 </div>
               </div>
               <div class="col-6 col-xl-3">
                 <div class="showreslutboximg">
-                  <img src={'assests/random05.png'} />
+                  <img src={"assests/random05.png"} />
                   <a
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     href
                     class="onovrshow"
                   >
-                    <img src={'assests/download.png'} />
+                    <img src={"assests/download.png"} />
                   </a>
                 </div>
               </div>
               <div class="col-6 col-xl-3">
                 <div class="showreslutboximg">
-                  <img src={'assests/random05.png'} />
+                  <img src={"assests/random05.png"} />
                   <a
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     href
                     class="onovrshow"
                   >
-                    <img src={'assests/download.png'} />
+                    <img src={"assests/download.png"} />
                   </a>
                 </div>
               </div>
@@ -78,10 +79,10 @@ function FinalBoard() {
                   <p>Are you satisfied with these results?</p>
                   <div class="satisfyicon">
                     <a href>
-                      <img src={'assests/satisfy.png'}/>
+                      <img src={"assests/satisfy.png"} />
                     </a>
                     <a href>
-                      <img src={'assests/Unsatisfy.png'}/>
+                      <img src={"assests/Unsatisfy.png"} />
                     </a>
                   </div>
                   <p class="mt-4">
@@ -99,79 +100,98 @@ function FinalBoard() {
                 </div>
               </div>
 
-              {/* <!-- The Modal Second --> */}
-           
+
               {/*<!-- The Modal Third -->*/}
-              <div class="modal continueEditImg" id="myModal">
-                 <div class="modal-dialog">
-                 <div class="modal-content">
-             
-                   {/*<!-- Modal Header -->*/}
-                   <div class="modal-header border-bottom-0">
-                     <h4 class="modal-title">What did you like about this image?</h4>
-                     <a href class="" data-bs-dismiss="modal"><img src= {'assests/close.png'}/></a>                                
-                     </div>
-             
-                   { /* <!-- Modal body -->*/}
-                     <div class="modal-body">
-                         <div class="row">
-                             <small class="show-results mb-3">Image 1 of 7</small>
-                             <div class="col-md-6">
-                                <div class="continuemodalboximg"><img src={'assests/random01.png'}/></div>
-                             </div>
-                             <div class="col-md-6">
-                                <div class="checkedfrm">
-                                   <label class="containercb">
-                                     <input type="checkbox"/>
-                                     <span class="checkmark"></span>
-                                   </label>
-                                   <span>Colors</span>
-                                </div>
-                                <div class="checkedfrm">
-                                 <label class="containercb">
-                                   <input type="checkbox"/>
-                                   <span class="checkmark"></span>
-                                 </label>
-                                 <span>Architecture</span>
-                              </div>
-                              <div class="checkedfrm">
-                                 <label class="containercb">
-                                   <input type="checkbox"/>
-                                   <span class="checkmark"></span>
-                                 </label>
-                                 <span>Shapes</span>
-                              </div>
-                              <div class="checkedfrm">
-                                 <label class="containercb">
-                                   <input type="checkbox"/>
-                                   <span class="checkmark"></span>
-                                 </label>
-                                 <span>Flowers</span>
-                              </div>
-                              <div class="checkedfrm">
-                                 <label class="containercb">
-                                   <input type="checkbox" id="myCheck" onclick="myFunction()"/>
-                                   <span class="checkmark"></span>
-                                 </label>
-                                 <span>Other :</span>
-                                
-                              </div>
-                              <div id="Other" style={{display:'none'}}>
-                                 <input type="text" placeholder="Triangle pattern" name="" />
-                             </div>
-                             <div class="c-btb-wrap">                                
-                                 <a href class="btn btn-primary">Next image</a>
-                                 <a href class="btn btn-primary primary-border">Done</a>
-                             </div>
-                             </div>
-                         </div>
-                     </div>
-             
-                   
-             
-                 </div>
-                 </div>
-             </div>
+              <div class="modal continueEditImg" show={handleOpenModal}>
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    {/*<!-- Modal Header -->*/}
+                    <div class="modal-header border-bottom-0">
+                      <h4 class="modal-title">
+                        What did you like about this image?
+                      </h4>
+                      <a href class="" data-bs-dismiss="modal">
+                        <img src={"assests/close.png"} />
+                      </a>
+                    </div>
+                    {/*<!-- Modal Header -->*/}
+
+                    {/* <!-- Modal body -->*/}
+                    <div class="modal-body">
+                      <div class="row">
+                        <small class="show-results mb-3">Image 1 of 7</small>
+                        <div class="col-md-6">
+                          <div class="continuemodalboximg">
+                            <img src={"assests/random01.png"} />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="checkedfrm">
+                            <label class="containercb">
+                              <input type="checkbox" />
+                              <span class="checkmark"></span>
+                            </label>
+                            <span>Colors</span>
+                          </div>
+                          <div class="checkedfrm">
+                            <label class="containercb">
+                              <input type="checkbox" />
+                              <span class="checkmark"></span>
+                            </label>
+                            <span>Architecture</span>
+                          </div>
+                          <div class="checkedfrm">
+                            <label class="containercb">
+                              <input type="checkbox" />
+                              <span class="checkmark"></span>
+                            </label>
+                            <span>Shapes</span>
+                          </div>
+                          <div class="checkedfrm">
+                            <label class="containercb">
+                              <input type="checkbox" />
+                              <span class="checkmark"></span>
+                            </label>
+                            <span>Flowers</span>
+                          </div>
+                          <div class="checkedfrm">
+                            <label class="containercb">
+                              <input
+                                type="checkbox"
+                                id="myCheck"
+                                onclick="myFunction()"
+                              />
+                              <span class="checkmark"></span>
+                            </label>
+                            <span>Other :</span>
+                          </div>
+                          <div id="Other" style={{ display: "none" }}>
+                            <input
+                              type="text"
+                              placeholder="Triangle pattern"
+                              name=""
+                            />
+                          </div>
+                          <div class="c-btb-wrap">
+                            <a href class="btn btn-primary">
+                              Next image
+                            </a>
+                            <a href class="btn btn-primary primary-border">
+                              Done
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* <!-- Modal body -->*/}
+
+                  </div>
+                </div>
+              </div>
+              {/*<!-- The Modal Third -->*/}
+
+
             </div>
             <div class="row">
               <div class="col-md-8">
@@ -190,7 +210,7 @@ function FinalBoard() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <img src={'assests/OptionsMenu.png'} />
+                      <img src={"assests/OptionsMenu.png"} />
                     </a>
 
                     <ul
@@ -218,21 +238,21 @@ function FinalBoard() {
               <div class="col-md-6">
                 <div class="sag-top">
                   <div class="sagimagetp">
-                    <img src={'assests/random01.png'} />
+                    <img src={"assests/random01.png"} />
                   </div>
                 </div>
               </div>
               <div class="col-md-6 mt-5 mt-lg-0">
                 <div class="sag-top">
                   <div class="sagimagetpRgt">
-                    <img src={'assests/random02.png'} />
+                    <img src={"assests/random02.png"} />
                   </div>
                   <div class="sagimagebtmRgt">
                     <span>
-                      <img src={'assests/random03.png'} />
+                      <img src={"assests/random03.png"} />
                     </span>
                     <span>
-                      <img src={'assests/random04.png'} />
+                      <img src={"assests/random04.png"} />
                     </span>
                   </div>
                 </div>
@@ -242,10 +262,10 @@ function FinalBoard() {
                 <div class="sag-top">
                   <div class="sagimagebtm">
                     <span>
-                      <img src={'assests/random07.png'} />
+                      <img src={"assests/random07.png"} />
                     </span>
                     <span>
-                      <img src={'assests/random08.png'} />
+                      <img src={"assests/random08.png"} />
                     </span>
                   </div>
                 </div>
@@ -253,13 +273,13 @@ function FinalBoard() {
               <div class="col-md-6 mt-5 mt-lg-0">
                 <div class="sag-botm">
                   <div class="sagimagetpRgt">
-                    <img src={'assests/random06.png'} />
+                    <img src={"assests/random06.png"} />
                   </div>
                 </div>
               </div>
 
               <div class="vision-bar generaterbimg generaterbimgresults">
-                <img src={'assests/MLogoIcon.png'} />
+                <img src={"assests/MLogoIcon.png"} />
                 <span>Mountain landscape</span>
                 <a href class="btn btn-secondary">
                   Generate
@@ -280,22 +300,23 @@ function FinalBoard() {
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/delete.png'} /> Landscape size only
+                        <img src={"assests/delete.png"} /> Landscape size only
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/delete.png'} /> Portrait size only
+                        <img src={"assests/delete.png"} /> Portrait size only
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/delete.png'} /> High resolution (+2880px)
+                        <img src={"assests/delete.png"} /> High resolution
+                        (+2880px)
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/delete.png'} /> Mixed ratios
+                        <img src={"assests/delete.png"} /> Mixed ratios
                       </button>
                     </li>
                   </ul>
