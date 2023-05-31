@@ -4,7 +4,7 @@ import "../../../Style.css";
 import { useNavigate } from "react-router-dom";
 
 function YourBoard() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleClick = () =>{
     navigate("/UploadBoard")

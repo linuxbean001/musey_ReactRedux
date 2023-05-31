@@ -1,6 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function FeedBackBoard() {
+  
+  const navigate = useNavigate();
+
+  const handleClick = () =>{
+    navigate("/final_board")
+  }
+
   return (
     <div>
       <div class="mainWraper">
@@ -128,9 +137,9 @@ function FeedBackBoard() {
               </div>
               <div class="col-md-4">
                 <div class="trbwrap">
-                  <a href class="btn btn-primary">
+                  <button onClick={handleClick} class="btn btn-primary">
                     Add more images
-                  </a>
+                  </button>
                   <div class="dropdown">
                     <a
                       href="#"

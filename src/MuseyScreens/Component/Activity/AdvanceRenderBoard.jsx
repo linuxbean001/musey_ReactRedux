@@ -1,7 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 
 function AdvanceRender() {
+
+ const navigate = useNavigate();
+
+  const handleClick = () =>{
+    navigate("/request_board")
+  }
+
   return (
     <div>
       <div class="mainWraper">
@@ -14,9 +22,9 @@ function AdvanceRender() {
               </div>
               <div class="col-md-4">
                 <div class="trbwrap">
-                  <a href class="btn btn-primary">
+                  <button onClick={handleClick} class="btn btn-primary">
                     Add more images
-                  </a>
+                  </button>
                   <div class="dropdown">
                     <a
                       href="#"

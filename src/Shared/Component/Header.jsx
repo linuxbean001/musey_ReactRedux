@@ -7,37 +7,35 @@ import SignUp from "./SignUp";
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
+  const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
   return (
     <div>
-    <section className="Menusection">
-      <div className="container">
-        <div className="menuHeader">
-          <Sidebar />
-          <div>
-            <Link to="#" className="navbar-brand">
-              <img src={"assests/logo.png"} alt="Logo" />
-            </Link>
-          </div>
-          <div>
-            <button onClick={openModal} className="sign-in">
-              Sign in
-            </button>
+      <section className="Menusection">
+        <div className="container">
+          <div className="menuHeader">
+            <Sidebar />
+            <div>
+              <Link to="#" className="navbar-brand">
+                <img src={"assests/logo.png"} alt="Logo" />
+              </Link>
+            </div>
+            <div>
+              <button onClick={handleOpenModal} className="sign-in">
+                Sign in
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      {isModalOpen && (
-        <SignUp onClose={closeModal} />
-      )}
-    </section>
-  
+
+        <SignUp isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
+      </section>
     </div>
   );
 }
