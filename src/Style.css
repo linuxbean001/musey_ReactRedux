@@ -1102,7 +1102,7 @@ section.procesSection {
 /* screen 8 */
 .continueEditImg .modal-content {
   background: #222a2a;
-  padding: 10px 0 109px 30px;
+  padding: 5px 8px 0px 10px;
 }
 
 .continueEditImg h4.modal-title {
@@ -1116,7 +1116,7 @@ section.procesSection {
 
 .continueEditImg .modal-dialog {
   max-width: 846px;
-  margin-top: 100px;
+  margin-top: 10px;
 }
 
 .continuemodalboximg img {

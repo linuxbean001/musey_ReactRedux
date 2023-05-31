@@ -1,42 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import BannerImage from "../../../Shared/Component/BannerImage";
 
 function FeedBackBoard() {
-  
   const navigate = useNavigate();
 
-  const handleClick = () =>{
-    navigate("/finalboard")
-  }
+  const handleClick = () => {
+    navigate("/finalboard");
+  };
 
   return (
     <div>
       <div class="mainWraper">
-        <section class="Menusection">
-          <div class="container">
-            <div class="menuHeader">
-              
-              <div>
-                <a class="navbar-brand" href="#">
-                  <img src={'assests/logo.png'} />
-                </a>
-              </div>
-              <div>
-                <a href class="sign-in">
-                  <span class="userName">
-                  WW
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="headerInnerbox">
-          <div class="addbox">Banner Image</div>
-        </section>
-
+        <BannerImage />
         <section class="rendering-board-section">
           <div class="container">
             <h2>Test renderings board</h2>
@@ -47,53 +23,53 @@ function FeedBackBoard() {
               </div>
               <div class="col-6 col-xl-3">
                 <div class="showreslutboximg">
-                  <img src={'assests/random05.png'} />
+                  <img src={"assests/random05.png"} />
                   <a
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     href
                     class="onovrshow"
                   >
-                    <img src={'assests/download.png'} />
+                    <img src={"assests/download.png"} />
                   </a>
                 </div>
               </div>
               <div class="col-6 col-xl-3">
                 <div class="showreslutboximg">
-                  <img src={'assests/random05.png'} />
+                  <img src={"assests/random05.png"} />
                   <a
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     href
                     class="onovrshow"
                   >
-                    <img src={'assests/download.png'} />
+                    <img src={"assests/download.png"} />
                   </a>
                 </div>
               </div>
               <div class="col-6 col-xl-3">
                 <div class="showreslutboximg">
-                  <img src={'assests/random05.png'} />
+                  <img src={"assests/random05.png"} />
                   <a
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     href
                     class="onovrshow"
                   >
-                    <img src={'assests/download.png'} />
+                    <img src={"assests/download.png"} />
                   </a>
                 </div>
               </div>
               <div class="col-6 col-xl-3">
                 <div class="showreslutboximg">
-                  <img src={'assests/random05.png'} />
+                  <img src={"assests/random05.png"} />
                   <a
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     href
                     class="onovrshow"
                   >
-                    <img src={'assests/download.png'} />
+                    <img src={"assests/download.png"} />
                   </a>
                 </div>
               </div>
@@ -102,10 +78,10 @@ function FeedBackBoard() {
                   <p>Are you satisfied with these results?</p>
                   <div class="satisfyicon">
                     <a href>
-                      <img src={'assests/satisfy.png'} />
+                      <img src={"assests/satisfy.png"} />
                     </a>
                     <a href>
-                      <img src={'assests/Unsatisfy.png'} />
+                      <img src={"assests/Unsatisfy.png"} />
                     </a>
                   </div>
                 </div>
@@ -116,10 +92,10 @@ function FeedBackBoard() {
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <a href class="downloadClose" data-bs-dismiss="modal">
-                      <img src={'assests/close.png'} />
+                      <img src={"assests/close.png"} />
                     </a>
                     <div class="modlbody">
-                      <img src={'assests/random09.png'} />
+                      <img src={"assests/random09.png"} />
                       <a href class="btn btn-primary downloadbtn">
                         Download
                       </a>
@@ -148,7 +124,7 @@ function FeedBackBoard() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <img src={'assests/OptionsMenu.png'} />
+                      <img src={"assests/OptionsMenu.png"} />
                     </a>
 
                     <ul
@@ -176,21 +152,21 @@ function FeedBackBoard() {
               <div class="col-md-6">
                 <div class="sag-top">
                   <div class="sagimagetp">
-                    <img src={'assests/random01.png'} />
+                    <img src={"assests/random01.png"} />
                   </div>
                 </div>
               </div>
               <div class="col-md-6 mt-5 mt-lg-0">
                 <div class="sag-top">
                   <div class="sagimagetpRgt">
-                    <img src={'assests/random02.png'} />
+                    <img src={"assests/random02.png"} />
                   </div>
                   <div class="sagimagebtmRgt">
                     <span>
-                      <img src={'assests/random03.png'} />
+                      <img src={"assests/random03.png"} />
                     </span>
                     <span>
-                      <img src={'assests/random04.png'}/>
+                      <img src={"assests/random04.png"} />
                     </span>
                   </div>
                 </div>
@@ -200,10 +176,10 @@ function FeedBackBoard() {
                 <div class="sag-top">
                   <div class="sagimagebtm">
                     <span>
-                      <img src={'assests/random07.png'} />
+                      <img src={"assests/random07.png"} />
                     </span>
                     <span>
-                      <img src={'assests/random08.png'} />
+                      <img src={"assests/random08.png"} />
                     </span>
                   </div>
                 </div>
@@ -211,13 +187,13 @@ function FeedBackBoard() {
               <div class="col-md-6 mt-5 mt-lg-0">
                 <div class="sag-botm">
                   <div class="sagimagetpRgt">
-                    <img src={'assests/random06.png'} />
+                    <img src={"assests/random06.png"} />
                   </div>
                 </div>
               </div>
 
               <div class="vision-bar generaterbimg generaterbimgresults">
-                <img src={'assests/MLogoIcon.png'} />
+                <img src={"assests/MLogoIcon.png"} />
                 <span>Mountain landscape</span>
                 <a href class="btn btn-secondary">
                   Generate
@@ -238,22 +214,23 @@ function FeedBackBoard() {
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/Delete.png'} /> Landscape size only
+                        <img src={"assests/Delete.png"} /> Landscape size only
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/Delete.png'} /> Portrait size only
+                        <img src={"assests/Delete.png"} /> Portrait size only
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/Delete.png'} /> High resolution (+2880px)
+                        <img src={"assests/Delete.png"} /> High resolution
+                        (+2880px)
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/Delete.png'}/> Mixed ratios
+                        <img src={"assests/Delete.png"} /> Mixed ratios
                       </button>
                     </li>
                   </ul>
