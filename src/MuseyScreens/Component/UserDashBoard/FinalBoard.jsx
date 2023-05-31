@@ -89,31 +89,34 @@ function FinalBoard() {
                     Sorry to hear that. Let’s see if we can improve those
                     results.
                   </p>
-                  <a
-                    data-bs-toggle="modal"
-                    data-bs-target="#myModal"
-                    href
+                  <button
+                    // data-bs-toggle="modal"
+                    // data-bs-target="#myModal"
                     class="btn btn-primary mt-3"
+                    onClick={handleOpenModal}
                   >
                     Continue
-                  </a>
+                  </button>
                 </div>
               </div>
 
-
               {/*<!-- The Modal Third -->*/}
-              <div class="modal continueEditImg" show={handleOpenModal}>
+              <Modal show={isModalOpen} className="modal continueEditImg" aria-labelledby="contained-modal-title-vcenter"
+      centered>
                 <div class="modal-dialog">
                   <div class="modal-content">
-
                     {/*<!-- Modal Header -->*/}
                     <div class="modal-header border-bottom-0">
                       <h4 class="modal-title">
                         What did you like about this image?
                       </h4>
-                      <a href class="" data-bs-dismiss="modal">
-                        <img src={"assests/close.png"} />
-                      </a>
+                      <span
+                        onClick={handleCloseModal}
+                        className=""
+                        data-bs-dismiss="modal"
+                      >
+                        <img src={"assests/close.png"} alt="Close" />
+                      </span>
                     </div>
                     {/*<!-- Modal Header -->*/}
 
@@ -185,13 +188,10 @@ function FinalBoard() {
                       </div>
                     </div>
                     {/* <!-- Modal body -->*/}
-
                   </div>
                 </div>
-              </div>
+              </Modal>
               {/*<!-- The Modal Third -->*/}
-
-
             </div>
             <div class="row">
               <div class="col-md-8">
