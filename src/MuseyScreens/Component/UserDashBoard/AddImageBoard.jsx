@@ -41,7 +41,6 @@ function AddImageBoard() {
                 </button>
               </div>
 
-
               {/*  modal */}
               <div class="modal" id="myModal">
                 <div class="modal-dialog">
