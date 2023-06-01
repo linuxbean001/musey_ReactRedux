@@ -1260,6 +1260,34 @@ section.procesSection {
   font-family: "Work Sans", sans-serif;
 }
 
+.addImage .modal-dialog {
+  max-width: 820px;
+  margin-top: 10px;
+  padding-top: 20px;
+}
+
+.addImage .modal-content {
+  background: #222a2a;
+  padding: 0;
+}
+
+.addImage .modal-content .modal-header {
+  padding: -10px;
+}
+.addImage h4.modal-title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.02em;
+  color: #faffff;
+  font-family: "Work Sans", sans-serif;
+}
+.addImage p {
+  margin-top: 5px;
+  margin-bottom: 16px;
+  color: white;
+  padding-top: 8px;
+}
 .hrline {
   display: block;
   margin: 40px 0;
@@ -1379,11 +1407,10 @@ section.procesSection {
     padding: 30px 30px;
   }
 
-  .start-adding-grid .randomeimgbox {
+  .start-adding-grid .randomeimgbox{
     padding: 30px 0px 0 0px;
   }
-
-  .trbwrap {
+  .trbwrap{
     justify-content: space-between;
     margin-top: 20px;
   }
