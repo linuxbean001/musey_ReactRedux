@@ -20,8 +20,10 @@ function LogIn({ isModalOpen, handleCloseModal }) {
   const { loginItem } = useContext(AuthContext);
 
   const handleSubmit = (values) => {
+    console.log("loginItem",loginItem)
     loginItem(values);
     handleCloseModal();
+    
   };
 
 

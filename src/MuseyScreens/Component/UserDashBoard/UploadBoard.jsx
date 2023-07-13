@@ -64,7 +64,7 @@ function UploadBoard() {
                   <div class="your-board-body">
                     <div class="addboard-button">
                       <Link to="/addimage">
-                        <img src={" "} />
+                        <img src="assests/add-plus.png" />
                       </Link>
                     </div>
                     <div class="ybgleft"></div>

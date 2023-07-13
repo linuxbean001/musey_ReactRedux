@@ -22,27 +22,7 @@ const validationSchema = Yup.object().shape({
 
 function SignUp({ isModalOpen, handleCloseModal }) {
   const navigate = useNavigate();
-  const { signup ,  } = useContext(AuthContext);
-
-
-
-  
-  const handleGoogle = () =>{
-     const BASE_URL = "http://localhost:8000";
-          const url = `${BASE_URL}/logingoogle/`;
-          fetch(url, {
-            method: "GET",
-          })
-            .then((response) => response.text())
-            .then((result) => {
-              console.log("Google Email",result);
-            })
-            .catch((error) => {
-              console.log("error", error);
-            });
-  }
-
- 
+  const { signup } = useContext(AuthContext);
 
   const handleSubmit = (values) => {
     signup(values);
@@ -177,7 +157,11 @@ function SignUp({ isModalOpen, handleCloseModal }) {
                 </div>
               </div>
               <div className="row">
-                <button type="submit" className="btn btn-primary" onClick={formik.handleSubmit}>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={formik.handleSubmit}
+                >
                   SignUp
                 </button>
               </div>
@@ -185,7 +169,17 @@ function SignUp({ isModalOpen, handleCloseModal }) {
               <div className="row">
                 <p>Or sign up with</p>
                 <div className="socialbtnWrap">
-                  <a className="btn btn-primary-white" href="" onClick={handleGoogle}>
+                  <a
+                    className="btn btn-primary-white"
+                    href=""
+                    onClick={() =>
+                      window.open(
+                        "http://localhost:8000/logingoogle/",
+                        "_blank"
+                      )
+                    }
+                    target="_blank"
+                  >
                     <img src="assests/googleIcon.png" /> Continue with Google
                   </a>
                 </div>

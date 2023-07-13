@@ -19,7 +19,7 @@ function Header() {
 
   const location = useLocation();
   const { pathname } = location;
-  console.log(pathname);
+  // console.log(pathname);
 
   return (
     <div>

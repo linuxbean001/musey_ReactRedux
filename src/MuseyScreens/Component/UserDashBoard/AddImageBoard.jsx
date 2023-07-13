@@ -4,52 +4,99 @@ import BannerImage from "../../../Shared/Component/BannerImage";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { EditText, EditTextarea } from 'react-edit-text';
+import 'react-edit-text/dist/index.css';
 
 function AddImageBoard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
-  const [filename, setFilename] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [content, setContent] = useState("Add Image Board");
+  const [hasUserModifiedContent, setHasUserModifiedContent] = useState(false);
 
-  console.log(selectedImages);
+  const handleContentChange = (event) => {
+    setContent(event.target.textContent);
+    setHasUserModifiedContent(true);
+  };
+
+
+  const handleUpload = () => {
+    const dataImage = localStorage.getItem("UserId");
+    const combinedData = {
+      user_id: dataImage,
+      images: selectedImages,
+      title: content,
+    };
+    const BASE_URL = "http://localhost:8000";
+    const url = `${BASE_URL}/creatmoodboard/`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(combinedData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("createMoodboard", data);
+          if (data.status === "success") {
+          toast.success("Upload successful!"); // Display success toast
+        } else if (data.status === "error") {
+          toast.error(data.error); // Display error toast
+        } else {
+          toast.error("Sorry, something went wrong"); // Display generic error toast
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+    setIsModalOpen(false);
+  };
+
   const handleImageChange = (event) => {
     const files = event.target.files;
-    setFilename(files);
     const imagesArray = [];
-    const fileName = [];
-    // console.log("fileName",fileName)
+    const maxImages = 4; // Maximum number of images allowed
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      imagesArray.push(URL.createObjectURL(file));
+    if (files.length > maxImages) {
+      // Handle case when more than four images are selected
+      alert("Only up to four images can be uploaded");
+      return;
     }
-    fileName.push(files);
-    console.log("fileName",fileName)
 
-    console.log("element ============-=-> " + fileName);
-
-    // files.forEach(element => {
-    // console.log("element ============-=-> "+element)
-    // });
-
-    setSelectedImages(imagesArray);
-
-    const interval = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress === 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prevProgress + 1;
+    const filePromises = Array.from(files).map((file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(file);
       });
-    }, 15);
+    });
 
-    return () => {
-      clearInterval(interval);
-    };
+    Promise.all(filePromises).then((base64Images) => {
+      setSelectedImages(base64Images);
+      setSelectedFiles(Array.from(files)); // Store the selected files in the state
+      setProgress(0);
+
+      // Start progress for each image
+      const interval = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress >= 100) {
+            clearInterval(interval);
+            return 100;
+          }
+          return prevProgress + 1;
+        });
+      }, 15);
+
+      return () => {
+        clearInterval(interval);
+      };
+    });
   };
-  // useEffect(() => {
-
-  // }, [selectedImages]);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -63,7 +110,7 @@ function AddImageBoard() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  console.log(filename);
+  // console.log(filename);
   const [progress, setProgress] = useState(0);
 
   const progressBarStyle = {
@@ -76,14 +123,20 @@ function AddImageBoard() {
         <BannerImage />
         <section class="searchsection">
           <div class="container">
-            <div class="searchbar" contentEditable={true}>
+            <div
+              class="searchbar"
+              contentEditable={!hasUserModifiedContent}
+              onInput={handleContentChange}
+            >
               <div class="untitleboard">
-                <span>Add Image Board</span>
+                <span>{content}</span>
               </div>
             </div>
             <div class="start-adding-grid">
               <div class="popupbox adpop">
-                <p className="fontsize">Start adding some images to this board</p>
+                <p className="fontsize">
+                  Start adding some images to this board
+                </p>
                 <button
                   class="btn btn-primary width"
                   onClick={handleOpenModal}
@@ -127,7 +180,7 @@ function AddImageBoard() {
                         className=""
                         data-bs-dismiss="modal"
                       >
-                        <img src={"assests/close.png"} />
+                        <img src={"assests/close.png"} alt="Close" />
                       </span>
                       {/* </a> */}
                     </div>
@@ -155,42 +208,42 @@ function AddImageBoard() {
                               type="file"
                             />
                             {selectedImages.length > 0 ? (
-                              selectedImages.length > 0 &&
                               selectedImages.map((image, index) => (
                                 <img
+                                  key={index}
                                   src={image ? image : "assests/UploadArea.png"}
+                                  alt={`Image ${index}`}
                                 />
                               ))
                             ) : (
-                              <img src={"assests/UploadArea.png"} />
+                              <img
+                                src={"assests/UploadArea.png"}
+                                alt="Upload Area"
+                              />
                             )}
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="randomeimgbox">
-                            <div className="progresss">
-                              <p>randomimagename.jpg</p>
-                              <ProgressBar
-                                now={progress}
-                                style={progressBarStyle}
-                                label={`${progress}%`}
-                                visuallyHidden
-                              />
-                              <p>randomimagename.jpg</p>
-                              <ProgressBar
-                                now={progress}
-                                style={progressBarStyle}
-                                label={`${progress}%`}
-                                visuallyHidden
-                              />
-                              <p>randomimagename.jpg</p>
-                              <ProgressBar
-                                now={progress}
-                                style={progressBarStyle}
-                                label={`${progress}%`}
-                                visuallyHidden
-                              />
-                            </div>
+                            {selectedImages.map((image, index) => (
+                              <div className="progresss" key={index}>
+                                <p>{selectedFiles[index].name}</p>
+                                <ProgressBar
+                                  now={progress}
+                                  style={progressBarStyle}
+                                  label={`${progress}%`}
+                                  visuallyHidden
+                                />
+                              </div>
+                            ))}
+                            <br />
+                            <button
+                              class="btn btn-primary width"
+                              style={{ padding: "10px", marginTop: "5px" }}
+                              onClick={handleUpload}
+                            >
+                              Upload Images
+                            </button>
                             {/* <div class="progress" style={{ height: "10px" }}>
                                 <div
                                   class="progress-bar"
@@ -262,6 +315,7 @@ function AddImageBoard() {
           </div>
         </section>
       </div>
+      <ToastContainer />
     </div>
   );
 }
