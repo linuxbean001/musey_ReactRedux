@@ -1,6 +1,22 @@
-import React from 'react';
+import LogIn from '../../../Shared/Component/LogIn';
+import React, { useState } from "react";
+import "../../../Style.css";
+
 
 const HeroSection = () => {
+
+   
+
+ const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section className="heroSection">
       <div className="container">
@@ -8,13 +24,17 @@ const HeroSection = () => {
           <div className="col-sm-12 col-lg-6">
             <h1>A picture is worth a thousand words</h1>
             <p>Visual AI rendering is here. Jumpstart your inspiration today.</p>
-            <a href="/yourboard" className="btn btn-primary">
-              Get Started for free
-            </a>
+           
+            <button  onClick={handleOpenModal}  className="btn btn-primary width">
+              LogIn
+            </button>
+           
+           
           </div>
+          <LogIn isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
           <div className="col-sm-12 col-lg-6 mt-5 mt-lg-0">
             <div className="heroImageRight">
-              <span>FPO</span>
+              <span className="padding">FPO</span>
             </div>
           </div>
         </div>

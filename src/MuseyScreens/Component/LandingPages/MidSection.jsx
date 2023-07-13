@@ -20,9 +20,6 @@ const MidSection = () => {
               your creative flow back in order.
             </p>
 
-            <a href="#" className="btn btn-primary">
-              Get Started for free
-            </a>
           </div>
           <div className="col-md-6 mt-5 mt-lg-0">
             <div className="grid-wrapper-Right">

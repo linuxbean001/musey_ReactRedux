@@ -23,6 +23,7 @@ body {
   align-items: center;
 }
 
+
 .mainWraper {
   position: relative;
   padding-bottom: 100px;
@@ -44,6 +45,7 @@ body {
   margin: 80px 0 0 0;
   padding: 0;
 }
+
 
 .Menusection nav ul > li {
   list-style: none;
@@ -165,7 +167,7 @@ body {
   letter-spacing: -0.02em;
   color: #222a2a;
   border: none;
-  padding: 10px 22px;
+  padding: 10px 162px;
   transition: all 0.5s;
   margin-right: 20px;
 }
@@ -322,7 +324,10 @@ span.userName {
   gap: 10px;
   width: 60px;
   height: 60px;
-  border: 1px solid #646a6a;
+  border: 1px solid #2afdfd;
+  background-color: #2afdfd;
+  color: black;
+  font-weight: 900;
   border-radius: 100px;
 }
 
@@ -401,10 +406,18 @@ i.fa.fa-search {
   overflow: hidden;
 }
 
+.ybgleft img {
+  width: 100%;
+}
+
 .ybgright {
   display: block;
   width: 50%;
   margin-left: 5px;
+}
+
+.ybgright img {
+  width: 100%;
 }
 
 .ybgright span {
@@ -416,9 +429,13 @@ i.fa.fa-search {
   overflow: hidden;
 }
 
+.fontsize {
+  font-size: 15px;
+}
+
 .ybgright span:first-child {
   border-radius: 0px 10px 0px 0px;
-}
+} 
 
 .your-board-footer {
   display: block;
@@ -1242,16 +1259,46 @@ section.procesSection {
   padding-top: 20px;
 }
 
+.signinmds .modal-dialog {
+  max-width: 820px;
+  margin-top: 10px;
+  padding-top: 20px;
+}
+
+.modal-dialogs .modal-lg.modal-dialog-centered {
+  max-width: 500px;
+  padding:20px;
+}
+
 .signinmd .modal-content {
   background: #222a2a;
   padding: 0;
+}
+
+.signinmds .modal-content {
+  background: #222a2a;
+  margin: 100px;
+  margin-top: 0px;
 }
 
 .signinmd .modal-content .modal-header {
   padding: -10px;
 }
 
+.signinmds .modal-content .modal-header {
+  padding: -10px;
+}
+
 .signinmd h4.modal-title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.02em;
+  color: #faffff;
+  font-family: "Work Sans", sans-serif;
+}
+
+.signinmds h4.modal-title {
   font-weight: 700;
   font-size: 32px;
   line-height: 38px;
@@ -1373,6 +1420,10 @@ section.procesSection {
   text-decoration: underline;
 }
 
+.padding {
+  
+}
+
 @media screen and (max-width: 640px) {
   nav {
     height: 100%;
@@ -1382,6 +1433,11 @@ section.procesSection {
 
   .heroImageRight {
     width: 100%;
+    padding-left: 20px;
+  }
+
+  .padding {
+    padding-left: 111px;
   }
 
   .bottomSection,
@@ -1410,6 +1466,7 @@ section.procesSection {
   .start-adding-grid .randomeimgbox{
     padding: 30px 0px 0 0px;
   }
+
   .trbwrap{
     justify-content: space-between;
     margin-top: 20px;
@@ -1445,4 +1502,51 @@ section.procesSection {
   .hrline {
     border: 1px solid #646a6a;
   }
+
+  .width {
+      width: 100%;
+  }
+}
+
+/* Forgot Password */
+
+.container1 {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 140px;
+  /* Set the container's height as per your requirement */
+}
+
+.centered-content {
+  display: flex;
+    flex-direction: column;
+    border: 2px solid white;
+    padding: 100px;
+}
+
+
+/* Email verification */
+
+.container2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 140px;
+  /* Set the container's height as per your requirement */
+}
+
+.centered-content1 {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid white;
+  padding: 100px;
+  background-color: #2afdfd;
+}
+
+.changed {
+  font-size: 22px;
+  font-weight: 600;
 }

@@ -16,9 +16,11 @@ function Header() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
   const location = useLocation();
   const { pathname } = location;
   console.log(pathname);
+
   return (
     <div>
       <section className="Menusection">
@@ -30,17 +32,16 @@ function Header() {
                 <img src={"assests/logo.png"} alt="Logo" />
               </Link>
             </div>
-            <div>{ pathname ==='/' ?
-         
-              <button onClick={handleOpenModal} className="sign-in">
-                Sign in
-              </button> : 
-               <a href class="sign-in">
-                  <span class="userName">
-                  WW
-                  </span>
+            <div>
+              {pathname === "/" ? (
+                <button onClick={handleOpenModal} className="sign-in">
+                  SignUp
+                </button>
+              ) : (
+                <a href class="sign-in">
+                  <span class="userName">WW</span>
                 </a>
-                   }
+              )}
             </div>
           </div>
         </div>

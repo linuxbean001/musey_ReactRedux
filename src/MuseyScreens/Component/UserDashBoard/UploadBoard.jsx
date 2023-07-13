@@ -52,17 +52,19 @@ function UploadBoard() {
                     </div>
                   </div>
                   <div class="your-board-footer">
-                    <h4>A User’s Named Board</h4>
+                    <a href="/yourboard" style={{textDecoration:"none"}}>
+                    <h4>Click to move board page</h4>
                     <p>
-                      <span>8 images </span>•<span> 2 renders</span>
+                      <span>----- </span>•<span> ------</span>
                     </p>
+                    </a>
                   </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
                   <div class="your-board-body">
                     <div class="addboard-button">
                       <Link to="/addimage">
-                        <img src={"assests/add-plus.png"} />
+                        <img src={" "} />
                       </Link>
                     </div>
                     <div class="ybgleft"></div>

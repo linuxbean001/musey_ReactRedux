@@ -76,16 +76,16 @@ function AddImageBoard() {
         <BannerImage />
         <section class="searchsection">
           <div class="container">
-            <div class="searchbar">
+            <div class="searchbar" contentEditable={true}>
               <div class="untitleboard">
-                <span>Untitled board 1</span>
+                <span>Add Image Board</span>
               </div>
             </div>
             <div class="start-adding-grid">
               <div class="popupbox adpop">
-                <p>Start adding some images to this board</p>
+                <p className="fontsize">Start adding some images to this board</p>
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-primary width"
                   onClick={handleOpenModal}
                   style={{ padding: "10px", marginTop: "5px" }}
                 >

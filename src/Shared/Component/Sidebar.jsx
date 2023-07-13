@@ -1,30 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../Style.css";
 import { Link } from "react-router-dom";
 
-
 function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const crossStyle = {
+    color: "#2afdfd",
+    float: "right",
+    padding: "10px",
+    cursor: "pointer"
+  };
+
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div>
-      <input type="checkbox" id="openSideMenu" className="openSideMenu" />
-      <label for="openSideMenu" className="menuIconToggle">
-        <span>
-          <img src="assests/HamburgerMenu.png" />
-        </span>
-      </label>
+      <input
+        type="checkbox"
+        id="openSideMenu"
+        className="openSideMenu"
+        checked={isOpen}
+      />
+      {isOpen ? null : (
+        <label htmlFor="openSideMenu" className="menuIconToggle" onClick={toggleSidebar}>
+          <span className="menuIcon">
+            <img src="assests/HamburgerMenu.png" alt="menu" />
+          </span>
+        </label>
+      )}
       <nav>
-        <ul>
+        <span style={crossStyle} onClick={closeSidebar}>X</span>
+        <ul className={isOpen ? "sidebarOpen" : "sidebarClosed"}>
           <li>
-            <Link to="#">Menu Item 1</Link>
+            <Link to="#">Boards</Link>
           </li>
           <li>
-            <Link to="#">Menu Item 2</Link>
+            <Link to="#">Favorites</Link>
           </li>
           <li>
-            <Link to="#">Menu Item 3</Link>
+            <Link to="#">Profile</Link>
           </li>
           <li>
-            <Link to="#">Menu Item 4</Link>
+            <Link to="#">Payments</Link>
           </li>
         </ul>
       </nav>

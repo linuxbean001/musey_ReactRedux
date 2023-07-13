@@ -10,7 +10,8 @@ import YourBoard from "./MuseyScreens/Component/UserDashBoard/YourBoard";
 import UploadBoard from "./MuseyScreens/Component/UserDashBoard/UploadBoard";
 import TestRenderingBoard from "./MuseyScreens/Component/UserDashBoard/TestRenderingBoard";
 import AddImageBoard from "./MuseyScreens/Component/UserDashBoard/AddImageBoard";
-
+import Forgot from "./Shared/Component/Forgot";
+import EmailVerify from "./Shared/Component/EmailVerify"
 
 function App() {
   return (
@@ -19,7 +20,10 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/signup" element={<SignUp />} />
+          {/* Other routes */}
+          <Route path="/signup" element={<SignUp />} /> {/* Other routes */}
+          <Route path="/forgot" element={<Forgot />} />
+          <Route path="/emailverified" element={<EmailVerify />} />
           <Route path="/yourboard" element={<YourBoard />} />
           <Route path="/uploadboard" element={<UploadBoard />} />
           <Route path="/addimage" element={<AddImageBoard />} />

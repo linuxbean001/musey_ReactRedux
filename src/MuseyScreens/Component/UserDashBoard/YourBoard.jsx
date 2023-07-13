@@ -35,17 +35,18 @@ function YourBoard() {
                       aria-describedby="button-addon2"
                       class="form-control border-0 bg-light"
                     />
+                    <div class="row"><a href="" class="btn btn-primary" style={{borderRadius:"24px"}}>Search</a></div>
                   </div>
                 </div>
               </form>
             </div>
 
             <div class="searchbox">
-              <h3>Your boards</h3>
+              <h3>Start Image boards</h3>
               <div class="row">
                 <div class="popupbox">
-                  <p>Looks like you don’t have any boards</p>
-                  <button onClick={handleClick} class="btn btn-primary">
+                  <p className="fontsize">Looks like you don’t have any boards</p>
+                  <button onClick={handleClick} class="btn btn-primary width">
                     Start a board now, click here
                   </button>
                 </div>
