@@ -43,6 +43,7 @@ function AddImageBoard() {
         console.log("createMoodboard", data);
           if (data.status === "success") {
           toast.success("Upload successful!"); // Display success toast
+           setIsModalOpen(false);
         } else if (data.status === "error") {
           toast.error(data.error); // Display error toast
         } else {
@@ -52,7 +53,6 @@ function AddImageBoard() {
       .catch((error) => {
         console.log("error", error);
       });
-    setIsModalOpen(false);
   };
 
   const handleImageChange = (event) => {
