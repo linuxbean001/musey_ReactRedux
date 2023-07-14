@@ -8,6 +8,7 @@ function AdvanceRender() {
 
   const handleClick = () => {
     navigate("/requestboard");
+    console.log("ppp")
   };
 
   useEffect(() => {
