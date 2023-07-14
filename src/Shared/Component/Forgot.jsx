@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const validationSchema = Yup.object().shape({
@@ -18,7 +20,8 @@ function Forgot() {
 
 
   const handleForgot = (values) => {
-    console.log(values);
+    //console.log(values);
+   toast.success("processing Password changed!! ")
     forgot(values);
     navigate("/")
   };
@@ -32,6 +35,7 @@ function Forgot() {
   });
 
   return (
+    <>
     <div className="container1">
       {/* Rest of the form */}
       <form onSubmit={formik.handleSubmit} className="centered-content">
@@ -61,6 +65,8 @@ function Forgot() {
       </form>
       {/* Rest of the form */}
     </div>
+    <ToastContainer />
+    </>
   );
 }
 

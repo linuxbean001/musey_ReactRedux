@@ -6,28 +6,36 @@ import { Modal } from "react-bootstrap";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { EditText, EditTextarea } from 'react-edit-text';
-import 'react-edit-text/dist/index.css';
+import ReactEasyEdit from "react-easy-edit";
 
 function AddImageBoard() {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [content, setContent] = useState("Add Image Board");
-  const [hasUserModifiedContent, setHasUserModifiedContent] = useState(false);
+  const [value, setValue] = useState("Untitled Image");
+   const [uploadedImages, setUploadedImages] = useState([]);
 
-  const handleContentChange = (event) => {
-    setContent(event.target.textContent);
-    setHasUserModifiedContent(true);
+
+
+  const handleSave = (value) => {
+    setValue(value);
   };
 
+  const handleCancel = () => {
+    // Handle cancel event if needed
+  };
+
+  const handleValidate = (value) => {
+    return true; // Return true if value is valid, false otherwise
+  };
 
   const handleUpload = () => {
     const dataImage = localStorage.getItem("UserId");
     const combinedData = {
       user_id: dataImage,
       images: selectedImages,
-      title: content,
+      title: value,
     };
     const BASE_URL = "http://localhost:8000";
     const url = `${BASE_URL}/creatmoodboard/`;
@@ -41,9 +49,17 @@ function AddImageBoard() {
       .then((response) => response.json())
       .then((data) => {
         console.log("createMoodboard", data);
-          if (data.status === "success") {
+        if (data.status === "success") {
+          localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+          setUploadedImages(selectedImages)
           toast.success("Upload successful!"); // Display success toast
-           setIsModalOpen(false);
+          setIsModalOpen(false);
+          setTimeout(() => {
+            toast.success("Wait to move Next Page!"); // Display success toast
+          }, 4000);
+          setTimeout(() => {
+            navigate("/advancerender")
+          }, 9000);
         } else if (data.status === "error") {
           toast.error(data.error); // Display error toast
         } else {
@@ -97,10 +113,9 @@ function AddImageBoard() {
       };
     });
   };
-  const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/testrender");
+    navigate("/advancerender");
   };
 
   const handleOpenModal = () => {
@@ -125,11 +140,20 @@ function AddImageBoard() {
           <div class="container">
             <div
               class="searchbar"
-              contentEditable={!hasUserModifiedContent}
-              onInput={handleContentChange}
+              //contentEditable={!hasUserModifiedContent}
+              //onInput={handleContentChange}
             >
               <div class="untitleboard">
-                <span>{content}</span>
+                <ReactEasyEdit
+                  type="text"
+                  onSave={handleSave}
+                  onCancel={handleCancel}
+                  onValidate={handleValidate}
+                  value={value}
+                  saveButtonLabel="Save"
+                  cancelButtonLabel="Cancel"
+                  attributes={{ placeholder: "Click to edit" }}
+                />
               </div>
             </div>
             <div class="start-adding-grid">
@@ -152,13 +176,13 @@ function AddImageBoard() {
                 >
                   Click to add images
                 </a> */}
-                <button
+                {/* <button
                   class="btn btn-primary"
                   onClick={handleClick}
                   style={{ padding: "10px", marginTop: "5px" }}
                 >
                   Next Page
-                </button>
+                </button> */}
               </div>
 
               {/*  modal */}
@@ -270,47 +294,52 @@ function AddImageBoard() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>        
                 {/* </div> */}
               </Modal>
               {/* modal close */}
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="sag-top">
-                    <div class="sagimagetp">
-                      <img src={"assests/randombox-default.png"} />
-                    </div>
-                    <div class="sagimagebtm">
-                      <span>
-                        <img src={"assests/randombox-default.png"} />
-                      </span>
-                      <span>
-                        <img src={"assests/randombox-default.png"} />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 mt-5 mt-lg-0">
-                  <div class="sag-top">
-                    <div class="sagimagetpRgt">
-                      <img src={"assests/randombox-default.png"} />
-                    </div>
-                    <div class="sagimagebtmRgt">
-                      <span>
-                        <img src={"assests/randombox-default.png"} />
-                      </span>
-                      <span>
-                        <img src={"assests/randombox-default.png"} />
-                      </span>
-                    </div>
-                  </div>
-                  <div class="sag-botm">
-                    <div class="sagimagetpRgt">
-                      <img src={"assests/randombox-default.png"} />
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+            {/* Image Show on moodboard */}
+<div class="row">
+  <div class="col-md-6">
+    <div class="sag-top">
+      <div class="sagimagetp">
+        <img src={uploadedImages[0] ? uploadedImages[0] : "assests/randombox-default.png"} />
+      </div>
+      <div class="sagimagebtm">
+        <span>
+          <img src={uploadedImages[1] ? uploadedImages[1] : "assests/randombox-default.png"} />
+        </span>
+        <span>
+          <img src={uploadedImages[2] ? uploadedImages[2] : "assests/randombox-default.png"} />
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mt-5 mt-lg-0">
+    <div class="sag-top">
+      <div class="sagimagetpRgt">
+        <img src={uploadedImages[3] ? uploadedImages[3] : "assests/randombox-default.png"} />
+      </div>
+      <div class="sagimagebtmRgt">
+        <span>
+          <img src={uploadedImages[4] ? uploadedImages[4] : "assests/randombox-default.png"} />
+        </span>
+        <span>
+          <img src={uploadedImages[5] ? uploadedImages[5] : "assests/randombox-default.png"} />
+        </span>
+      </div>
+    </div>
+    <div class="sag-botm">
+      <div class="sagimagetpRgt">
+        <img src={uploadedImages[6] ? uploadedImages[6] : "assests/randombox-default.png"} />
+      </div>
+    </div>
+  </div>
+</div>
+{/* Image Show on moodboard */}
+
+
             </div>
           </div>
         </section>

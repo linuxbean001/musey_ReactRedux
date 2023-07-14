@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function AdvanceRender() {
+  const [uploadImagesData, setUploadImagesData] = useState([]);
 
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleClick = () =>{
-    navigate("/requestboard")
-  }
+  const handleClick = () => {
+    navigate("/requestboard");
+  };
+
+  useEffect(() => {
+    const uploadedImagesData = JSON.parse(localStorage.getItem("uploadedImages"));
+     if (uploadedImagesData) {
+      setUploadImagesData(uploadedImagesData);
+    }
+  }, []);
 
   return (
     <div>
@@ -33,7 +40,7 @@ function AdvanceRender() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <img src={'assests/OptionsMenu.png'} />
+                      <img src={"assests/OptionsMenu.png"} />
                     </a>
 
                     <ul
@@ -58,30 +65,35 @@ function AdvanceRender() {
             </div>
 
             <div class="row mt-4 redboarbtm">
+              
+              {/* Image New Board */}
               <div class="col-md-6">
                 <div class="sag-top">
                   <div class="sagimagetp">
-                    <img src={'assests/random01.png'} />
+                  <img src={uploadImagesData[0]} alt="Image 1" />
                   </div>
                 </div>
               </div>
               <div class="col-md-6 mt-5 mt-lg-0">
                 <div class="sag-top">
                   <div class="sagimagetpRgt">
-                    <img src={'assests/random02.png'} />
+                  <img src={uploadImagesData[1]} alt="Image 2" />
                   </div>
                   <div class="sagimagebtmRgt">
                     <span>
-                      <img src={'assests/random03.png'} />
+                    <img src={uploadImagesData[2]} alt="Image 3" />
                     </span>
                     <span>
-                      <img src={'assests/random04.png'} />
+                    <img src={uploadImagesData[3]} alt="Image 4" />
                     </span>
                   </div>
                 </div>
               </div>
+
+              {/* Image New Board */}
+
               <div class="vision-bar generaterbimg">
-                <img src={'assests/MLogoIcon.png'}/>
+                <img src={"assests/MLogoIcon.png"} />
                 <span>Mountain landscape</span>
                 <a href class="btn btn-secondary">
                   Generate
@@ -102,23 +114,23 @@ function AdvanceRender() {
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/Delete.png'} /> Landscape size only
+                        <img src={"assests/Delete.png"} /> Landscape size only
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/Delete.png'} /> Portrait size only
+                        <img src={"assests/Delete.png"} /> Portrait size only
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/Delete.png'}/> High resolution
+                        <img src={"assests/Delete.png"} /> High resolution
                         (+2880px)
                       </button>
                     </li>
                     <li>
                       <button class="dropdown-item" type="button">
-                        <img src={'assests/Delete.png'}/> Mixed ratios
+                        <img src={"assests/Delete.png"} /> Mixed ratios
                       </button>
                     </li>
                   </ul>

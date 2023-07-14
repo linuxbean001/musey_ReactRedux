@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
       .then((data) => {
         if (data.detail !== "Email already registered") {
           setIsLoggedIn(true);
-          toast.success("Sign up successful!");
+          toast.success("Please check your email and verify to use musey AI services");
           setUser(data.user); // Assuming the API returns the user object
         } else {
           // console.log("API response:", data.detail);
@@ -67,9 +67,6 @@ export const AuthProvider = ({ children }) => {
                           // console.log("resultAccess_token", result.UserId);
                           toast.success("Login successful!");
                           localStorage.setItem("UserId", result.UserId);
-                        setTimeout(() => {
-                          window.location.href = "/yourboard";
-                        }, 2000);
                         })
                         .catch((error) => {
                           console.log("error", error);

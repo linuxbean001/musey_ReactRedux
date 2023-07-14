@@ -5,6 +5,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -22,9 +24,10 @@ const validationSchema = Yup.object().shape({
 
 function SignUp({ isModalOpen, handleCloseModal }) {
   const navigate = useNavigate();
-  const { signup } = useContext(AuthContext);
+  const { signup, } = useContext(AuthContext);
 
   const handleSubmit = (values) => {
+    toast.success("SignUp is processing!!");
     signup(values);
     handleCloseModal();
   };
@@ -46,6 +49,7 @@ function SignUp({ isModalOpen, handleCloseModal }) {
   };
 
   return (
+    <>
     <Modal
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -189,7 +193,10 @@ function SignUp({ isModalOpen, handleCloseModal }) {
           </div>
         </div>
       </div>
+
     </Modal>
+    <ToastContainer />
+    </>
   );
 }
 

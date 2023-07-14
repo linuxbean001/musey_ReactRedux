@@ -8,7 +8,6 @@ import RequestBoard from "./MuseyScreens/Component/UserDashBoard/ImageRequestBoa
 import AdvanceRender from "./MuseyScreens/Component/UserDashBoard/AdvanceRenderBoard";
 import YourBoard from "./MuseyScreens/Component/UserDashBoard/YourBoard";
 import UploadBoard from "./MuseyScreens/Component/UserDashBoard/UploadBoard";
-import TestRenderingBoard from "./MuseyScreens/Component/UserDashBoard/TestRenderingBoard";
 import AddImageBoard from "./MuseyScreens/Component/UserDashBoard/AddImageBoard";
 import Forgot from "./Shared/Component/Forgot";
 import EmailVerify from "./Shared/Component/EmailVerify"
@@ -27,7 +26,6 @@ function App() {
           <Route path="/yourboard" element={<YourBoard />} />
           <Route path="/uploadboard" element={<UploadBoard />} />
           <Route path="/addimage" element={<AddImageBoard />} />
-          <Route path="/testrender" element={<TestRenderingBoard />} />
           <Route path="/advancerender" element={<AdvanceRender />} />
           <Route path="/requestboard" element={<RequestBoard />} />
           <Route path="/feedbackboard" element={<FeedBackBoard />} />
