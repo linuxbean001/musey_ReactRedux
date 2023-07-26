@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import "../../Style.css";
 import { Modal } from "react-bootstrap";
 import { useFormik } from "formik";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 const validationSchema = Yup.object().shape({
   fname: Yup.string().required("FirstName is required"),
@@ -23,9 +24,10 @@ const validationSchema = Yup.object().shape({
 });
 
 function SignUp({ isModalOpen, handleCloseModal }) {
-  const [roleUser, setRoleUser] = useState("free");
+  const [roleUser, setRoleUser] = useState("pro");
   const navigate = useNavigate();
   const { signup } = useContext(AuthContext);
+  const isMountedRef = useRef(true);
 
   const handleSubmit = (values) => {
     toast.success("SignUp is processing!!");
@@ -35,11 +37,11 @@ function SignUp({ isModalOpen, handleCloseModal }) {
 
   const formik = useFormik({
     initialValues: {
-      name : "" ,
+      name: "",
       email: "",
       hashed_password: "",
       is_active: false,
-      role: roleUser
+      role: roleUser,
     },
     validationSchema,
     onSubmit: handleSubmit,
@@ -49,9 +51,42 @@ function SignUp({ isModalOpen, handleCloseModal }) {
     cursor: "pointer",
   };
 
-  const handleGoogle = () =>{
-    
-  }
+  useEffect(() => {
+    if (isMountedRef.current) {
+      const getAccessTokenFromURL = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("accesstoken")) {
+          handleGoogle();
+        }
+      };
+      getAccessTokenFromURL();
+    }
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  const handleGoogle = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get("accesstoken");
+    if (!urlParams.get("accesstoken")) {
+      window.open("http://localhost:8000/logingoogle/", "_blank");
+    }
+    const BASE_URL = "http://localhost:8000";
+    const apiUrl = `${BASE_URL}/user/?token=${encodeURIComponent(accessToken)}`;
+    (async () => {
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if(data){
+          navigate("/yourboard")
+        }
+        console.log("GoogleData", data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
 
   return (
     <>

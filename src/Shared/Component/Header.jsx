@@ -86,6 +86,21 @@ function Header() {
     setEditMode(false);
   };
 
+   const handleLogout = () => {
+    // Clear user-related data from localStorage
+    localStorage.removeItem("UserId");
+    localStorage.removeItem("UserName");
+    localStorage.removeItem("UserEmail");
+    localStorage.removeItem("UserRole");
+    localStorage.removeItem("UserActive");
+    toast.success("Logout Successfully")
+    setUserIsOpen(false)
+    // Redirect to the main page (assuming the main page path is "/")
+    setTimeout(() => {
+    window.location.href = "/";
+    }, 5000);
+  };
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -152,7 +167,7 @@ function Header() {
                         <br/>
                         <br/>
                         <div className="social1">
-                            <button onClick={handleUserName}>LogOut</button>
+                            <button onClick={handleLogout}>LogOut</button>
                         </div>
                       </div>
                     </div>

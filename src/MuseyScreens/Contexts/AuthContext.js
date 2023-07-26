@@ -6,7 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("UserId")
+  );
   const [user, setUser] = useState(null);
 
   const handleSignup = (values) => {
