@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function AdvanceRender() {
   const [uploadImagesData, setUploadImagesData] = useState([]);
+ // console.log("uploadImagesData :-",uploadImagesData)
+  const location = useLocation();
 
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/requestboard");
-    console.log("pppppppp")
+    //console.log("pppppppp")
   };
 
   useEffect(() => {
-    const uploadedImagesData = JSON.parse(localStorage.getItem("uploadedImages"));
-     if (uploadedImagesData) {
-      setUploadImagesData(uploadedImagesData);
+    const uploadedImagesDatas = location.state?.uploadedImages;
+    if (uploadedImagesDatas) {
+      setUploadImagesData(uploadedImagesDatas);
     }
-  }, []);
+  }, [location.state]);
 
   return (
     <div>
@@ -68,29 +70,16 @@ function AdvanceRender() {
             <div class="row mt-4 redboarbtm">
               
               {/* Image New Board */}
-              <div class="col-md-6">
-                <div class="sag-top">
-                  <div class="sagimagetp">
-                  <img src={uploadImagesData[0]} alt="Image 1" />
+              {/* Render uploaded images */}
+              {uploadImagesData.map((image, index) => (
+                <div className="col-md-6" key={index}>
+                  <div className="sag-top">
+                    <div className="sagimagetp">
+                      <img src={image} alt={`Image ${index + 1}`} />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-6 mt-5 mt-lg-0">
-                <div class="sag-top">
-                  <div class="sagimagetpRgt">
-                  <img src={uploadImagesData[1]} alt="Image 2" />
-                  </div>
-                  <div class="sagimagebtmRgt">
-                    <span>
-                    <img src={uploadImagesData[2]} alt="Image 3" />
-                    </span>
-                    <span>
-                    <img src={uploadImagesData[3]} alt="Image 4" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-
+              ))}
               {/* Image New Board */}
 
               <div class="vision-bar generaterbimg">

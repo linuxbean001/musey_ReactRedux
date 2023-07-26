@@ -1,25 +1,17 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-function RequestBoard() {
-
-  const navigate = useNavigate();
-
-  const handleClick = () =>{
-    navigate("/feedbackboard")
-  }
-
+function ImageRequestBoard() {
   return (
     <div>
-      <div class="mainWraper">
-        <section class="procesSection">
-          <div class="container">
-            <div class="processbox-row">
-              <div class="">
-                <img src={"assests/MLogoIcon-process.png"}  />
+      <div className="mainWraper">
+        <section className="procesSection">
+          <div className="container">
+            <div className="processbox-row">
+              <div>
+                <img src={"assests/MLogoIcon-process.png"} alt="" />
                 <h3>Processing your request</h3>
                 <p>In the meantime, a word from our sponsors</p>
-                <div class="processbox" onClick={handleClick}>Image</div>
+                <div class="processbox">Image</div>
               </div>
             </div>
           </div>
@@ -29,4 +21,4 @@ function RequestBoard() {
   );
 }
 
-export default RequestBoard;
+export default ImageRequestBoard;

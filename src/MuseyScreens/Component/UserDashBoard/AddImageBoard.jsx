@@ -14,9 +14,7 @@ function AddImageBoard() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [value, setValue] = useState("Untitled Image");
-   const [uploadedImages, setUploadedImages] = useState([]);
-
-
+  const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleSave = (value) => {
     setValue(value);
@@ -48,17 +46,27 @@ function AddImageBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("createMoodboard", data);
+        // console.log("createMoodboard", JSON.stringify(data.uploadedimages.images));
         if (data.status === "success") {
-          localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
-          setUploadedImages(selectedImages)
+          localStorage.setItem(
+            "uploadedImages",
+            JSON.stringify(selectedImages)
+          );
+          localStorage.setItem("moodid", data.moodid);
+          localStorage.setItem(
+            "uploadedimagesdata",
+            JSON.stringify(data.uploadedimages.images)
+          );
+          setUploadedImages(selectedImages);
           toast.success("Upload successful!"); // Display success toast
           setIsModalOpen(false);
           setTimeout(() => {
             toast.success("Wait to move Next Page!"); // Display success toast
           }, 4000);
           setTimeout(() => {
-            navigate("/advancerender")
+            navigate("/feedbackboard", {
+              state: { uploadedImages: selectedImages },
+            });
           }, 9000);
         } else if (data.status === "error") {
           toast.error(data.error); // Display error toast
@@ -147,11 +155,9 @@ function AddImageBoard() {
                 <ReactEasyEdit
                   type="text"
                   onSave={handleSave}
-                  onCancel={handleCancel}
                   onValidate={handleValidate}
                   value={value}
                   saveButtonLabel="Save"
-                  cancelButtonLabel="Cancel"
                   attributes={{ placeholder: "Click to edit" }}
                 />
               </div>
@@ -164,25 +170,10 @@ function AddImageBoard() {
                 <button
                   class="btn btn-primary width"
                   onClick={handleOpenModal}
-                  style={{ padding: "10px", marginTop: "5px" }}
+                  style={{ padding: "10px", marginTop: "5px",boxShadow: "0px 0px 4px 0px" }}
                 >
                   Click to add images
                 </button>
-                {/* <a
-                  href
-                  class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#myModal"
-                >
-                  Click to add images
-                </a> */}
-                {/* <button
-                  class="btn btn-primary"
-                  onClick={handleClick}
-                  style={{ padding: "10px", marginTop: "5px" }}
-                >
-                  Next Page
-                </button> */}
               </div>
 
               {/*  modal */}
@@ -230,6 +221,7 @@ function AddImageBoard() {
                               id="filer_input2"
                               multiple="multiple"
                               type="file"
+                              accept="image/*"
                             />
                             {selectedImages.length > 0 ? (
                               selectedImages.map((image, index) => (
@@ -237,12 +229,23 @@ function AddImageBoard() {
                                   key={index}
                                   src={image ? image : "assests/UploadArea.png"}
                                   alt={`Image ${index}`}
+                                  style={{
+                                    maxWidth: "100%",
+                                    height: "auto",
+                                    display: "block",
+                                    marginBottom: "10px",
+                                  }}
                                 />
                               ))
                             ) : (
                               <img
                                 src={"assests/UploadArea.png"}
                                 alt="Upload Area"
+                                style={{
+                                  maxWidth: "100%",
+                                  height: "auto",
+                                  display: "block",
+                                }}
                               />
                             )}
                           </div>
@@ -268,78 +271,33 @@ function AddImageBoard() {
                             >
                               Upload Images
                             </button>
-                            {/* <div class="progress" style={{ height: "10px" }}>
-                                <div
-                                  class="progress-bar"
-                                  style={{ width: "40%", height: "10px" }}
-                                ></div>
-                              </div> */}
-
-                            {/* <div class="progress" style={{ height: "10px" }}>
-                                
-                                <div
-                                  class="progress-bar"
-                                  style={{ width: "40%", height: "10px" }}
-                                ></div>
-                              </div> */}
-
-                            {/* <div class="progress" style={{ height: "10px" }}>
-                                <div
-                                  class="progress-bar"
-                                  style={{ width: "40%", height: "10px" }}
-                                ></div>
-                              </div> */}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>        
+                </div>
                 {/* </div> */}
               </Modal>
               {/* modal close */}
 
-            {/* Image Show on moodboard */}
-<div class="row">
-  <div class="col-md-6">
-    <div class="sag-top">
-      <div class="sagimagetp">
-        <img src={uploadedImages[0] ? uploadedImages[0] : "assests/randombox-default.png"} />
-      </div>
-      <div class="sagimagebtm">
-        <span>
-          <img src={uploadedImages[1] ? uploadedImages[1] : "assests/randombox-default.png"} />
-        </span>
-        <span>
-          <img src={uploadedImages[2] ? uploadedImages[2] : "assests/randombox-default.png"} />
-        </span>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6 mt-5 mt-lg-0">
-    <div class="sag-top">
-      <div class="sagimagetpRgt">
-        <img src={uploadedImages[3] ? uploadedImages[3] : "assests/randombox-default.png"} />
-      </div>
-      <div class="sagimagebtmRgt">
-        <span>
-          <img src={uploadedImages[4] ? uploadedImages[4] : "assests/randombox-default.png"} />
-        </span>
-        <span>
-          <img src={uploadedImages[5] ? uploadedImages[5] : "assests/randombox-default.png"} />
-        </span>
-      </div>
-    </div>
-    <div class="sag-botm">
-      <div class="sagimagetpRgt">
-        <img src={uploadedImages[6] ? uploadedImages[6] : "assests/randombox-default.png"} />
-      </div>
-    </div>
-  </div>
-</div>
-{/* Image Show on moodboard */}
-
-
+              {/* Image Show on moodboard */}
+              <div className="row">
+                {uploadedImages.map((image, index) => (
+                  <div className="col-md-3" key={index}>
+                    <div className="sag-top">
+                      <div className="sagimagetp">
+                        <img
+                          src={image}
+                          alt={`Image ${index}`}
+                          className="fixed-size-image"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Image Show on moodboard */}
             </div>
           </div>
         </section>

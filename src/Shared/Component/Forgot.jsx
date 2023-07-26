@@ -21,7 +21,7 @@ function Forgot() {
 
   const handleForgot = (values) => {
     //console.log(values);
-   toast.success("processing Password changed!! ")
+   toast.success("Forgot Password is Processing... ")
     forgot(values);
     navigate("/")
   };
@@ -39,6 +39,7 @@ function Forgot() {
     <div className="container1">
       {/* Rest of the form */}
       <form onSubmit={formik.handleSubmit} className="centered-content">
+      <h1 style={{color:"white"}}>Email Sent</h1>
         <div className="row">
           <div className="col justify-center">
             <input

@@ -17,7 +17,7 @@ function YourBoard() {
         <section class="searchsection">
           <div class="container">
             <div class="searchbar">
-              <form action="">
+              {/* <form action="">
                 <div class="formContrl">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -38,7 +38,7 @@ function YourBoard() {
                     <div class="row"><a href="" class="btn btn-primary" style={{borderRadius:"24px"}}>Search</a></div>
                   </div>
                 </div>
-              </form>
+              </form> */}
             </div>
 
             <div class="searchbox">

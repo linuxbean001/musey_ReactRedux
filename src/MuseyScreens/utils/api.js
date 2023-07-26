@@ -1,6 +1,7 @@
 const BASE_URL = "http://localhost:8000"; // Update with your API base URL
 
 export const Register = async (userData) => {
+  console.log("dasdassadfa",userData)
   const response = await fetch(`${BASE_URL}/signup/`, {
     method: "POST",
     headers: {

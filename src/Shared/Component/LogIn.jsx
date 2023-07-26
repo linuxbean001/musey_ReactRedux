@@ -20,12 +20,9 @@ function LogIn({ isModalOpen, handleCloseModal }) {
   const { loginItem } = useContext(AuthContext);
 
   const handleSubmit = (values) => {
-    console.log("loginItem")
+   // console.log("loginItem")
     loginItem(values);
     handleCloseModal();
-    setTimeout(() => {
-     navigate("/yourboard");
-    }, 2000);
   };
 
 
