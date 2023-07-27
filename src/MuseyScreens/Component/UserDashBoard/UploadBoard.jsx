@@ -41,12 +41,17 @@ function UploadBoard() {
       });
   }, []);
 
-  const handleSearch = () => {
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  useEffect(() => {
+    // Filter the mood boards whenever searchQuery changes
     const filteredData = moodBoardData.filter((item) =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredMoodBoardData(filteredData);
-  };
+  }, [searchQuery, moodBoardData]);
 
   const handleTitleEdit = (moodboardId, title) => {
     setEditedTitle(title);
@@ -149,9 +154,9 @@ function UploadBoard() {
                       aria-describedby="button-addon2"
                       class="form-control border-0 bg-light"
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onChange={handleChange}
                     />
-                    <div class="row">
+                    {/* <div class="row">
                       <a
                         href="#"
                         class="btn btn-primary"
@@ -160,15 +165,15 @@ function UploadBoard() {
                       >
                         Search
                       </a>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </form>
             </div>
 
             <div class="searchbox yb-active">
-              <h3>Your MoodBoards</h3>
-              <div class="row">
+              <h3>Weeding MoodBoards</h3>
+              <div class="row" style={{rowGap:"50px"}}>
                 {filteredMoodBoardData.length > 0
                   ? filteredMoodBoardData.map((item, index) => (
                       <div class="col-sm-6 col-lg-3">
@@ -188,7 +193,7 @@ function UploadBoard() {
                         <div class="your-board-footer">
                           {editMode &&
                           item.moodboard_id === selectedMoodboardId ? (
-                            <div>
+                            <div className="editmode">
                               {/* Input field to edit the title */}
                               <input
                                 type="text"
@@ -199,14 +204,11 @@ function UploadBoard() {
                             </div>
                           ) : (
                             <div>
-                              <a
-                                style={{ textDecoration: "none" }}
-                                
-                              >
+                              <a style={{ textDecoration: "none" }}>
                                 <h4>{item.title}</h4>
                               </a>
                               {/* "Edit" and "Delete" icons */}
-                              <div>
+                              <div className="edit-delete-icons">
                                 <span
                                   onClick={() =>
                                     handleTitleEdit(
@@ -268,14 +270,11 @@ function UploadBoard() {
                               </div>
                             ) : (
                               <div>
-                                <a
-                                  style={{ textDecoration: "none" }}
-                                  
-                                >
+                                <a style={{ textDecoration: "none" }}>
                                   <h4>{item.title}</h4>
                                 </a>
                                 {/* "Edit" and "Delete" icons */}
-                                <div>
+                                <div className="edit-delete-icons">
                                   <span
                                     onClick={() =>
                                       handleTitleEdit(

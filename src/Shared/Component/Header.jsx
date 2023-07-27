@@ -93,6 +93,7 @@ function Header() {
     localStorage.removeItem("UserEmail");
     localStorage.removeItem("UserRole");
     localStorage.removeItem("UserActive");
+    
     toast.success("Logout Successfully")
     setUserIsOpen(false)
     // Redirect to the main page (assuming the main page path is "/")
@@ -153,9 +154,9 @@ function Header() {
                           <br />
                           <div className="design">{userEmail}</div>
                           <br />
-                          <div className="design">{userRole}</div>
+                          {/* <div className="design">{userRole}</div>
                           <br />
-                          <div className="design">{userActive}</div>
+                          <div className="design">{userActive}</div> */}
                         </div>
                         <div className="social">
                           {editMode ? (

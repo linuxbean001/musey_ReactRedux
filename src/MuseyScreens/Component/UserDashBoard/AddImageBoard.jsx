@@ -15,6 +15,7 @@ function AddImageBoard() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [value, setValue] = useState("Untitled Image");
   const [uploadedImages, setUploadedImages] = useState([]);
+   const [isButtonCSSClicked, setIsButtonCSSClicked] = useState(false);
 
   const handleSave = (value) => {
     setValue(value);
@@ -128,10 +129,12 @@ function AddImageBoard() {
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
+    setIsButtonCSSClicked(true);  
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsButtonCSSClicked(false)
   };
   // console.log(filename);
   const [progress, setProgress] = useState(0);
@@ -148,9 +151,8 @@ function AddImageBoard() {
           <div class="container">
             <div
               class="searchbar"
-              //contentEditable={!hasUserModifiedContent}
-              //onInput={handleContentChange}
             >
+              <p className="edittitle">Click & Edit the title</p>
               <div class="untitleboard">
                 <ReactEasyEdit
                   type="text"
@@ -164,16 +166,18 @@ function AddImageBoard() {
             </div>
             <div class="start-adding-grid">
               <div class="popupbox adpop">
+                <div style={{marginTop : isButtonCSSClicked ? "-55rem" : ""}}>
                 <p className="fontsize">
                   Start adding some images to this board
                 </p>
                 <button
                   class="btn btn-primary width"
                   onClick={handleOpenModal}
-                  style={{ padding: "10px", marginTop: "5px",boxShadow: "0px 0px 4px 0px" }}
+                  style={{ padding: "10px", marginTop: "-5px",boxShadow: "0px 0px 4px 0px" }}
                 >
                   Click to add images
                 </button>
+                </div>
               </div>
 
               {/*  modal */}

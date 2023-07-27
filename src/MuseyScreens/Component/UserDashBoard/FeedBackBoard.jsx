@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import BannerImage from "../../../Shared/Component/BannerImage";
 import { toast, ToastContainer } from "react-toastify";
@@ -26,8 +26,21 @@ function FeedBackBoard() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [progress, setProgress] = useState(0);
+  const inputRef = useRef(null);
 
-  //console.log("uploadImagesData", uploadImagesData);
+  useEffect(() => {
+    // Scroll to the input element when the component mounts
+    if (inputRef.current) {
+      const yOffset = -50; // You can adjust this value to offset the scroll position
+      const elementPosition = inputRef.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset + yOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }, []);
 
   const baseUrl = "http://localhost:8000/static/moodimages/";
 
@@ -109,7 +122,7 @@ function FeedBackBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("re-renderAPIdata", data);
+         console.log("re-renderAPIdata", data);
         if (data.status === "success") {
           setIsLoading(false);
           toast.success("Re-Render image Succesfully");
@@ -320,7 +333,6 @@ function FeedBackBoard() {
     }
   }, [location.state]);
 
-
   return (
     <div>
       {isLoading ? (
@@ -330,12 +342,16 @@ function FeedBackBoard() {
           <BannerImage />
           <section class="rendering-board-section">
             <div class="container">
-              <h2>Test renderings board</h2>
+              {/* <h2>Test renderings board</h2> */}
               <div class="row mt-4">
-                <div class="col-md-12">
-                  {/* <small class="show-results">Showing results for:</small> */}
-                  {/* <p class="imagemsg">Mountain landscape</p> */}
-                </div>
+                {renderdimages.length > 0 ? (
+                  <div class="col-md-12">
+                    {/* <small class="show-results">Showing results for:</small>  */}
+                    <p class="imagemsg">Test renderings board</p>
+                  </div>
+                ) : (
+                  ""
+                )}
                 {/* Conditionally render renderdimages section */}
                 {reRenderdImages.length > 0
                   ? // Re-rendered image
@@ -373,15 +389,22 @@ function FeedBackBoard() {
 
                 <div class="col-md-12">
                   <div class="satisfybox">
-                    <p>Are you satisfied with these results?</p>
-                    <div class="satisfyicon">
-                      <a href>
-                        <img src={"assests/satisfy.png"} alt="" />
-                      </a>
-                      <a href onClick={handleUnsatisfyClick}>
-                        <img src={"assests/Unsatisfy.png"} alt="" />
-                      </a>
-                    </div>
+                    {renderdimages.length > 0 ? (
+                      <div>
+                        <p>Are you satisfied with these results?</p>
+                        <div class="satisfyicon">
+                          <a href>
+                            <img src={"assests/satisfy.png"} alt="" />
+                          </a>
+                          <a href onClick={handleUnsatisfyClick}>
+                            <img src={"assests/Unsatisfy.png"} alt="" />
+                          </a>
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+
                     {/* Conditionally render the extra component */}
                     {showExtraComponent && (
                       <div>
@@ -406,6 +429,17 @@ function FeedBackBoard() {
                   aria-labelledby="contained-modal-title-vcenter"
                   centered
                 >
+                  <span
+                    onClick={handleCloseModal}
+                    className=""
+                    data-bs-dismiss="modal"
+                  >
+                    <img
+                      src={"assests/close.png"}
+                      alt="Close"
+                      style={{ float: "right" }}
+                    />
+                  </span>
                   <div class="modal-dialog">
                     <div class="modal-content">
                       {/*<!-- Modal Header -->*/}
@@ -413,13 +447,6 @@ function FeedBackBoard() {
                         <h4 class="modal-title">
                           What did you like about this image?
                         </h4>
-                        <span
-                          onClick={handleCloseModal}
-                          className=""
-                          data-bs-dismiss="modal"
-                        >
-                          <img src={"assests/close.png"} alt="Close" />
-                        </span>
                       </div>
                       {/*<!-- Modal Header -->*/}
 
@@ -429,9 +456,9 @@ function FeedBackBoard() {
                           <div key={currentImage.image_id} class="modal-body">
                             <div class="row">
                               {/* image_id */}
-                              <small class="show-results mb-3">
+                              {/* <small class="show-results mb-3">
                                 Image Id : {currentImage.image_id}
-                              </small>
+                              </small> */}
                               {/* image_id */}
                               <div class="col-md-6">
                                 {/* imageurl  */}
@@ -444,25 +471,44 @@ function FeedBackBoard() {
                                 {/* imageurl  */}
                               </div>
                               <div class="col-md-6">
-                                {currentImage.imgobjects.map(
-                                  (object, index) => (
-                                    <div className="checkedfrm" key={index}>
-                                      <label className="containercb">
-                                        <input
-                                          type="checkbox"
-                                          onChange={() =>
-                                            handleCheckboxChange(object)
-                                          }
-                                          checked={checkedObjects[
-                                            currentImageIndex
-                                          ]?.includes(object)}
-                                        />
-                                        <span className="checkmark"></span>
-                                      </label>
-                                      <span>{object}</span>
-                                    </div>
-                                  )
-                                )}
+                                <div>
+                                  {currentImage.imgobjects.map(
+                                    (object, index) => (
+                                      <div className="checkedfrm" key={index}>
+                                        <label className="containercb">
+                                          <input
+                                            type="checkbox"
+                                            onChange={() =>
+                                              handleCheckboxChange(object)
+                                            }
+                                            checked={checkedObjects[
+                                              currentImageIndex
+                                            ]?.includes(object)}
+                                          />
+                                          <span className="checkmark"></span>
+                                        </label>
+                                        <span>{object}</span>
+                                      </div>
+                                    )
+                                  )}
+                                  {/* new checkbox section */}
+                                  <div className="checkedfrm">
+                                    <label className="containercb">
+                                      <input
+                                        type="checkbox"
+                                        onChange={() =>
+                                          handleCheckboxChange("color")
+                                        }
+                                        checked={checkedObjects[
+                                          currentImageIndex
+                                        ]?.includes("color")}
+                                      />
+                                      <span className="checkmark"></span>
+                                    </label>
+                                    <span>color</span>
+                                  </div>
+                                </div>
+                                {/* new checkbox section */}
 
                                 <div id="Other" style={{ display: "none" }}>
                                   <input
@@ -501,6 +547,7 @@ function FeedBackBoard() {
                   </div>
                 </Modal>
                 {/*<!-- The Modal Image Url section -->*/}
+
                 {/* <!-- The Download Image Modal Second --> */}
                 <Modal
                   className="modal modaldowload"
@@ -713,42 +760,28 @@ function FeedBackBoard() {
                   <div class="col-md-3" key={index}>
                     <div class="sag-top">
                       <div class="sagimagetp">
-                        <img src={imageSrc} alt="" className="fixed-size-image"/>
+                        <img
+                          src={imageSrc}
+                          alt=""
+                          className="fixed-size-image"
+                        />
                       </div>
                     </div>
                   </div>
                 ))}
-                {/* <div class="col-md-6">
-                  <div class="sag-top">
-                    <div class="sagimagetp">
-                      <img src={uploadImagesData[0]} alt="" />
-                    </div>
-                  </div>
-                </div>
 
-                <div class="col-md-6 mt-5 mt-lg-0">
-                  <div class="sag-top">
-                    <div class="sagimagetpRgt">
-                      <img src={uploadImagesData[1]} alt="" />
-                    </div>
-                    <div class="sagimagebtmRgt">
-                      <span>
-                        <img src={uploadImagesData[2]} alt="" />
-                      </span>
-                      <span>
-                        <img src={uploadImagesData[3]} alt="" />
-                      </span>
-                    </div>
-                  </div>
-                </div> */}
-
-                <div class="vision-bar generaterbimg generaterbimgresults">
+                {/* Promt text value section*/}
+                <div
+                  ref={inputRef}
+                  class="vision-bar generaterbimg generaterbimgresults"
+                >
                   <img src={"assests/MLogoIcon.png"} alt="" />
                   <input
+                    ref={inputRef}
                     type="text"
                     value={promtValue}
                     onChange={handleChange}
-                    placeholder="Enter Promt text"
+                    placeholder="Firstly Enter Promt text"
                     style={{
                       border: "none",
                       ":hover": {
@@ -760,6 +793,7 @@ function FeedBackBoard() {
                     Generate
                   </a>
                 </div>
+                {/* Promt text value Section*/}
 
                 <div class="advanced-option-bar">
                   <div class="dropdown">

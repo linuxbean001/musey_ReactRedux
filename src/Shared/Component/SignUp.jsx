@@ -69,18 +69,18 @@ function SignUp({ isModalOpen, handleCloseModal }) {
   const handleGoogle = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const accessToken = urlParams.get("accesstoken");
+    localStorage.setItem("LoginToken",accessToken)
     if (!urlParams.get("accesstoken")) {
       window.open("http://localhost:8000/logingoogle/", "_blank");
-    }
+    } 
     const BASE_URL = "http://localhost:8000";
     const apiUrl = `${BASE_URL}/user/?token=${encodeURIComponent(accessToken)}`;
     (async () => {
       try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-        if(data){
+        
           navigate("/yourboard")
-        }
         console.log("GoogleData", data);
       } catch (error) {
         console.log(error);

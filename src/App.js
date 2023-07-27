@@ -21,6 +21,7 @@ const ProtectedRoute = ({ element, redirectTo, condition }) => {
 function App() {
   const authContext = useContext(AuthContext);
   const isLoggedIn = authContext.isLoggedIn;
+  // console.log("isLoggedIn", isLoggedIn);
 
   return (
     <div className="App">

@@ -25,7 +25,6 @@ body {
 
 .mainWraper {
   position: relative;
-  padding-bottom: 100px;
 }
 
 .Menusection nav {
@@ -346,8 +345,15 @@ span.userName {
 }
 
 .searchsection {
-  margin-top: 40px;
+  margin-top: 120px;
   position: relative;
+}
+
+.searchbar .edittitle {
+  color: white;
+  margin-bottom: 0px;
+  font-size: 17px;
+  margin-left: 7px;
 }
 
 .form-control::placeholder {
@@ -436,6 +442,7 @@ i.fa.fa-search {
 
 .fontsize {
   font-size: 15px;
+  color: #2afdf4;
 }
 
 .ybgright span:first-child {
@@ -540,7 +547,7 @@ i.fa.fa-search {
   border: 1px solid #646a6a;
   border-radius: 10px !important;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 27px;
   line-height: 38px;
   letter-spacing: -0.02em;
   color: #2afdf4;
@@ -548,14 +555,14 @@ i.fa.fa-search {
 
 .untitleboard input[type="text"] {
   background: none;
-    color: #2afdf4;
-    border: 1px solid #302836;
+  color: #2afdf4;
+  border: 1px solid #302836;
 }
 
 button.easy-edit-button {
-      background: none;
-        color: #2afdfd;
-        box-shadow: 0px 0px 3px 0px;
+  background: none;
+  color: #2afdfd;
+  box-shadow: 0px 0px 3px 0px;
 }
 
 .easy-edit-button-wrapper {
@@ -653,6 +660,11 @@ button.easy-edit-button {
 .popupbox.adpop {
   bottom: inherit;
   top: 400%;
+  position: sticky;
+}
+
+.adpoptop {
+  margin-top: -55rem;
 }
 
 .start-adding-grid .modal-content {
@@ -1000,8 +1012,8 @@ section.procesSection {
   gap: 10px;
   width: 336px;
   height: 280px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    #646a6a;
+  background: linear-gradient(0deg, rgb(42 253 148 / 36%), rgb(255 79 79 / 73%)),
+    #2afdfd;
   margin: 0 auto;
   margin-top: 40px;
 }
@@ -1013,7 +1025,8 @@ section.procesSection {
   text-align: center;
   letter-spacing: -0.02em;
   color: #faffff;
-  margin-bottom: 20px;
+  margin-bottom: -19px;
+  margin-top: -15px;
 }
 
 .processbox-row p {
@@ -1143,7 +1156,7 @@ section.procesSection {
 /* screen 8 */
 .continueEditImg .modal-content {
   background: #222a2a;
-  padding: 5px 8px 0px 10px;
+  padding: 5px 77px 0px 45px;
 }
 
 .continueEditImg h4.modal-title {
@@ -1592,7 +1605,7 @@ section.procesSection {
   /* border: 1px solid #ccc; */
   border-radius: 8px;
   color: #2afdfd;
-    box-shadow: 0px 0px 5px 0px;
+  box-shadow: 0px 0px 5px 0px;
 }
 
 .fixed-size-image {
@@ -1618,7 +1631,7 @@ section.procesSection {
 }
 
 #login-container {
-  height: 450px;
+  height: 400px;
   width: 350px;
   padding: 20px;
   border-radius: 19px;
@@ -1627,6 +1640,7 @@ section.procesSection {
   box-shadow: 13px 5px 17px rgba(4, 0, 22, 0.5);
   z-index: 99999;
 }
+
 #login-container .profile-img {
   height: 65px;
   width: 65px;
@@ -1656,8 +1670,6 @@ section.procesSection {
   justify-items: start;
 }
 
-
-
 #login-container .grid-thirds {
   display: grid;
   grid-template-columns: 0fr 0fr 0fr;
@@ -1678,7 +1690,7 @@ section.procesSection {
   padding: 7px;
   margin-top: -36px;
 }
- #login-container .social {
+#login-container .social {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1696,21 +1708,21 @@ section.procesSection {
 
 #login-container button {
   width: 44%;
-    height: 37px;
-    font-size: 17px;
-    margin: 30px 10% 0 10%;
-    color: #2afdfd;
-    margin-left: 77px;
-    font-weight: 500;
-    border: none;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    margin-top: -32px;
-    border-radius: 5px;
-    background: linear-gradient(45deg, #28565a, #2a2931, #2af791, #222c2f);
-    background-size: 293% 300%;
-    outline: none;
-    transition: all 200ms ease-in-out;
-    box-shadow: 0px 0px 10px 0px;
+  height: 37px;
+  font-size: 17px;
+  margin: 30px 10% 0 10%;
+  color: #2afdfd;
+  margin-left: 77px;
+  font-weight: 500;
+  border: none;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  margin-top: -32px;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #28565a, #2a2931, #2af791, #222c2f);
+  background-size: 293% 300%;
+  outline: none;
+  transition: all 200ms ease-in-out;
+  box-shadow: 0px 0px 10px 0px;
 }
 #login-container button:hover {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
@@ -1722,7 +1734,7 @@ section.procesSection {
 #login-container button:active {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   transform: translateY(4px);
-} 
+}
 
 #login-container footer p:first-child {
   margin-right: 10px;
@@ -1745,4 +1757,67 @@ section.procesSection {
   100% {
     background-position: 100% 50%;
   }
+}
+
+/* Moodboard list edit delete */
+/* Custom CSS for the UploadBoard component */
+.your-board-footer {
+  /* ... (other styles) */
+
+  /* Style for the "Edit" and "Delete" icons container */
+  .edit-delete-icons {
+    margin-top: -33px;
+    display: flex;
+    align-items: center;
+    margin-left: 252px;
+    justify-content: center;
+  }
+
+  /* Style for the individual icons */
+  .edit-delete-icons span {
+    cursor: pointer;
+    margin: 0 5px;
+    color: #2afdfd;
+    /* Blue color, you can change it to match your design */
+    font-size: 18px;
+    transition: color 0.3s ease;
+  }
+
+  .edit-delete-icons span:hover {
+    color: #2afdfd;
+    /* Darker blue color on hover, you can adjust it accordingly */
+  }
+}
+
+/* Edit input style */
+.editmode input[type="text"] {
+  background: none;
+  color: #2afdf4;
+  border: 1px solid #302836;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.editmode button {
+  background: none;
+  color: #2afdfd;
+  box-shadow: 0px 0px 3px 0px;
+}
+
+/* request loader */
+/* Add this CSS to your stylesheet */
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadermain {
+  border: 4px solid rgb(255 79 79);
+  border-top: 4px solid #2afdfd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spinner 0.8s linear infinite;
+  margin: 0 auto;
 }

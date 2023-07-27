@@ -10,8 +10,7 @@ function ImageRequestBoard() {
               <div>
                 <img src={"assests/MLogoIcon-process.png"} alt="" />
                 <h3>Processing your request</h3>
-                <p>In the meantime, a word from our sponsors</p>
-                <div class="processbox">Image</div>
+                <div class="processbox"><div className="loadermain"></div></div>
               </div>
             </div>
           </div>
