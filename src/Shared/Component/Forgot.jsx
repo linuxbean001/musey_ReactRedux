@@ -20,7 +20,6 @@ function Forgot() {
 
 
   const handleForgot = (values) => {
-    //console.log(values);
    toast.success("Forgot Password is Processing... ")
     forgot(values);
     navigate("/")

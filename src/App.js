@@ -12,6 +12,7 @@ import EmailVerify from "./Shared/Component/EmailVerify";
 import ImageRequestBoard from "./MuseyScreens/Component/UserDashBoard/ImageRequestBoard";
 import ChangePassword from "./Shared/Component/ChangePassword";
 import LogOut from "./Shared/Component/LogOut";
+import StripeCheckout from "./StripeCheckout";
 
 // ProtectedRoute component to handle protected routes
 const ProtectedRoute = ({ element, redirectTo, condition }) => {
@@ -21,7 +22,7 @@ const ProtectedRoute = ({ element, redirectTo, condition }) => {
 function App() {
   const authContext = useContext(AuthContext);
   const isLoggedIn = authContext.isLoggedIn;
-  // console.log("isLoggedIn", isLoggedIn);
+  const userId = localStorage.getItem("UserId");  
 
   return (
     <div className="App">
@@ -29,7 +30,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/forgot" element={<Forgot />} />
+          <Route path="/forgetpassword" element={<Forgot />} />
           <Route path="/logout" element={<LogOut />} />
           <Route path="/passwordchange" element={<ChangePassword />} />
           <Route path="/emailverified" element={<EmailVerify />} />
@@ -85,9 +86,20 @@ function App() {
               />
             }
           />
+          <Route
+            path="/subscription"
+            element={
+              <ProtectedRoute
+                element={
+                  <StripeCheckout userId={userId} />
+                }
+                redirectTo="/"
+                condition={isLoggedIn}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
-      {/* <ImageRequestBoard/>   */}
     </div>
   );
 }

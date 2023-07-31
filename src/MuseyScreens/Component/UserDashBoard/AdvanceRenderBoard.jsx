@@ -3,14 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 function AdvanceRender() {
   const [uploadImagesData, setUploadImagesData] = useState([]);
- // console.log("uploadImagesData :-",uploadImagesData)
   const location = useLocation();
 
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/requestboard");
-    //console.log("pppppppp")
   };
 
   useEffect(() => {
@@ -68,7 +66,6 @@ function AdvanceRender() {
             </div>
 
             <div class="row mt-4 redboarbtm">
-              
               {/* Image New Board */}
               {/* Render uploaded images */}
               {uploadImagesData.map((image, index) => (

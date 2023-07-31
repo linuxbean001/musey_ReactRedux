@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../Style.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -17,35 +17,50 @@ const validationSchema = Yup.object().shape({
 function ChangePassword() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const getAccessTokenFromURL = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("password")) {
+        handleForgot();
+      }
+    };
+    getAccessTokenFromURL();
+  }, []);
+
   const handleForgot = (values) => {
-    //console.log(values);
-    toast.success("Password Change is Processing... ");
-    const urlSearchParams = new URLSearchParams(window.location.search);
-   // console.log("searchParams", urlSearchParams.toString());
-    const token = urlSearchParams.get("password");
-   // console.log("token", token);
-    if (token) {
-      const combinedData = {
-        password: values.password,
-        token: token,
-      };
-      const BASE_URL = "http://localhost:8000";
-      const url = `${BASE_URL}/changepassword/`;
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(combinedData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-       //   console.log(data);
-          navigate("/");
+    console.log("values", values);
+    if (values != undefined) {
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const token = urlSearchParams.get("password");
+      console.log("token", token);
+      if (token) {
+        const combinedData = {
+          password: values.password,
+          token: token,
+        };
+        const BASE_URL = "http://localhost:8000";
+        const url = `${BASE_URL}/changepassword/`;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(combinedData),
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("data", data);
+            if (data.status === "success") {
+              toast.success(data.message);
+              setTimeout(() => {
+                navigate("/");
+              }, 2000);
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }
     }
   };
 

@@ -20,7 +20,6 @@ function LogIn({ isModalOpen, handleCloseModal }) {
   const { loginItem } = useContext(AuthContext);
 
   const handleSubmit = (values) => {
-   // console.log("loginItem")
     loginItem(values);
     handleCloseModal();
   };
@@ -101,7 +100,7 @@ function LogIn({ isModalOpen, handleCloseModal }) {
                 </div>
                 <div>
                   <a
-                   href="/forgot"
+                   href="/forgetpassword"
                     style={{
                       textDecoration: "none",
                       color: "white",

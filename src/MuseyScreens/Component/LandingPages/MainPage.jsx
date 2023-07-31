@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import HeroSection from './HeroSection'
-import MidSection from './MidSection'
-import BottomSection from './BottomSection'
+import React, { useContext } from "react";
+import HeroSection from "./HeroSection";
+import MidSection from "./MidSection";
+import BottomSection from "./BottomSection";
 import { Link, Navigate } from "react-router-dom";
-import { AuthContext } from '../../Contexts/AuthContext'
+import { AuthContext } from "../../Contexts/AuthContext";
 
 function MainPage() {
   const authContext = useContext(AuthContext);
@@ -17,12 +17,12 @@ function MainPage() {
   // Otherwise, display the main page content
 
   return (
-  <div className="mainWraper">
-    <HeroSection/>
-    <MidSection/>
-    <BottomSection/>
-  </div>
-  )
+    <div className="mainWraper">
+      <HeroSection />
+      <MidSection />
+      <BottomSection />
+    </div>
+  );
 }
 
-export default MainPage
+export default MainPage;

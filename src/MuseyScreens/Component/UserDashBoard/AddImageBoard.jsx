@@ -15,7 +15,7 @@ function AddImageBoard() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [value, setValue] = useState("Untitled Image");
   const [uploadedImages, setUploadedImages] = useState([]);
-   const [isButtonCSSClicked, setIsButtonCSSClicked] = useState(false);
+  const [isButtonCSSClicked, setIsButtonCSSClicked] = useState(false);
 
   const handleSave = (value) => {
     setValue(value);
@@ -47,7 +47,6 @@ function AddImageBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("createMoodboard", JSON.stringify(data.uploadedimages.images));
         if (data.status === "success") {
           localStorage.setItem(
             "uploadedImages",
@@ -70,7 +69,9 @@ function AddImageBoard() {
             });
           }, 9000);
         } else if (data.status === "error") {
-          toast.error(data.error); // Display error toast
+          toast.error(data.error); 
+          navigate("/subscription")
+
         } else {
           toast.error("Sorry, something went wrong"); // Display generic error toast
         }
@@ -129,14 +130,13 @@ function AddImageBoard() {
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
-    setIsButtonCSSClicked(true);  
+    setIsButtonCSSClicked(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setIsButtonCSSClicked(false)
+    setIsButtonCSSClicked(false);
   };
-  // console.log(filename);
   const [progress, setProgress] = useState(0);
 
   const progressBarStyle = {
@@ -149,9 +149,7 @@ function AddImageBoard() {
         <BannerImage />
         <section class="searchsection">
           <div class="container">
-            <div
-              class="searchbar"
-            >
+            <div class="searchbar">
               <p className="edittitle">Click & Edit the title</p>
               <div class="untitleboard">
                 <ReactEasyEdit
@@ -166,17 +164,21 @@ function AddImageBoard() {
             </div>
             <div class="start-adding-grid">
               <div class="popupbox adpop">
-                <div style={{marginTop : isButtonCSSClicked ? "-55rem" : ""}}>
-                <p className="fontsize">
-                  Start adding some images to this board
-                </p>
-                <button
-                  class="btn btn-primary width"
-                  onClick={handleOpenModal}
-                  style={{ padding: "10px", marginTop: "-5px",boxShadow: "0px 0px 4px 0px" }}
-                >
-                  Click to add images
-                </button>
+                <div style={{ marginTop: isButtonCSSClicked ? "-55rem" : "" }}>
+                  <p className="fontsize">
+                    Start adding some images to this board
+                  </p>
+                  <button
+                    class="btn btn-primary width"
+                    onClick={handleOpenModal}
+                    style={{
+                      padding: "10px",
+                      marginTop: "-5px",
+                      boxShadow: "0px 0px 4px 0px",
+                    }}
+                  >
+                    Click to add images
+                  </button>
                 </div>
               </div>
 

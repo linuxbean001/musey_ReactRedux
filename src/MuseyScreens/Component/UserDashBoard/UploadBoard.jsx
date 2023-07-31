@@ -30,8 +30,6 @@ function UploadBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data", data);
-        console.log("UserMoodboard", data.moodboards[0].images[0].image_url);
         if (data.status === "success") {
           setMoodBoardData(data.moodboards);
         }
@@ -75,7 +73,6 @@ function UploadBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("title update", data.moodboard_title);
         if (data.status === "success") {
           setEditMode(false);
           toast.success(data.message);
@@ -98,7 +95,6 @@ function UploadBoard() {
   };
 
   const handleDelete = (moodboardId) => {
-    console.log("Moodboard ID to be deleted:", moodboardId);
     const combinedData = {
       moodboard_id: moodboardId,
     };
@@ -113,7 +109,6 @@ function UploadBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Delete Moodboard", data.moodboard_title);
         if (data.status === "success") {
           toast.success(data.message);
           setMoodBoardData((prevData) =>
@@ -173,7 +168,7 @@ function UploadBoard() {
 
             <div class="searchbox yb-active">
               <h3>Weeding MoodBoards</h3>
-              <div class="row" style={{rowGap:"50px"}}>
+              <div class="row" style={{ rowGap: "50px" }}>
                 {filteredMoodBoardData.length > 0
                   ? filteredMoodBoardData.map((item, index) => (
                       <div class="col-sm-6 col-lg-3">

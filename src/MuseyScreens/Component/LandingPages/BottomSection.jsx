@@ -13,7 +13,6 @@ const BottomSection = () => {
               for visual artist, UX/UI designers, graphic designers, event
               planners, and possible even cats. This is AI for everyone.
             </p>
-            
           </div>
           <div className="col-md-6 mt-5 mt-lg-0">
             <img src={"assests/stable-diffusion-text-images.png"} alt="" />

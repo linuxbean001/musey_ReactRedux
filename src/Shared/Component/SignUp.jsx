@@ -23,10 +23,11 @@ const validationSchema = Yup.object().shape({
     .required("You must agree to the terms and conditions"),
 });
 
-function SignUp({ isModalOpen, handleCloseModal }) {
+  function SignUp({ isModalOpen, handleCloseModal }) {
   const [roleUser, setRoleUser] = useState("pro");
   const navigate = useNavigate();
   const { signup } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const isMountedRef = useRef(true);
 
   const handleSubmit = (values) => {
@@ -51,41 +52,20 @@ function SignUp({ isModalOpen, handleCloseModal }) {
     cursor: "pointer",
   };
 
-  useEffect(() => {
-    if (isMountedRef.current) {
-      const getAccessTokenFromURL = () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get("accesstoken")) {
-          handleGoogle();
+    const handleGoogle = () => {
+    // Call the function from the AuthContext to handle Google login
+    authContext.handleGoogleLogin()
+      .then((isLoggedIn) => {
+        if (isLoggedIn) {
+          toast.success("Login successful!");
+        } else {
+          toast.error("Login failed. Please try again.");
         }
-      };
-      getAccessTokenFromURL();
-    }
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
-
-  const handleGoogle = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get("accesstoken");
-    localStorage.setItem("LoginToken",accessToken)
-    if (!urlParams.get("accesstoken")) {
-      window.open("http://localhost:8000/logingoogle/", "_blank");
-    } 
-    const BASE_URL = "http://localhost:8000";
-    const apiUrl = `${BASE_URL}/user/?token=${encodeURIComponent(accessToken)}`;
-    (async () => {
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-          navigate("/yourboard")
-        console.log("GoogleData", data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+      })
+      .catch((error) => {
+        console.error("Google login error:", error);
+        toast.error("An error occurred during login.");
+      });
   };
 
   return (

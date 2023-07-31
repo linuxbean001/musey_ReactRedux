@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React from "react";
 
 const MidSection = () => {
   return (
@@ -14,12 +13,11 @@ const MidSection = () => {
               about is crafting together a complicated prompt.
             </p>
             <p>
-              Build a museboard, tell Musey what you want to do, and that’s
-              it. Within minutes your brilliant visual input combined with
-              your simple text prompt creates high quality graphics to get
-              your creative flow back in order.
+              Build a museboard, tell Musey what you want to do, and that’s it.
+              Within minutes your brilliant visual input combined with your
+              simple text prompt creates high quality graphics to get your
+              creative flow back in order.
             </p>
-
           </div>
           <div className="col-md-6 mt-5 mt-lg-0">
             <div className="grid-wrapper-Right">

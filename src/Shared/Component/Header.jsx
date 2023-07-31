@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../Style.css";
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import FeedBackBoard from "../../MuseyScreens/Component/UserDashBoard/FeedBackBoard";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +18,8 @@ function Header() {
   const [userRole, setUserRole] = useState("");
   const [userActive, setUserActive] = useState("");
   const [editMode, setEditMode] = useState(false); // State variable to track edit mode
+  const authContext = useContext(AuthContext);
+  
 
   useEffect(() => {
     // Fetch the data from localStorage
@@ -32,7 +35,17 @@ function Header() {
     setUserEmail(userEmail);
     setUserRole(userRole);
     setUserActive(userActive);
-  }, []);
+
+    // Listen for changes in user data from AuthContext
+    // Check if the URL contains the "accesstoken" parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get("accesstoken");
+    if (accessToken) {
+      // If the access token is present, call handleGoogleLogin
+      // from the AuthContext to handle the Google login flow
+      authContext.handleGoogleLogin();
+    }
+  }, [authContext]);
 
   const toggleDropdown = () => {
     setUserIsOpen(!isUserOpen);
@@ -71,12 +84,12 @@ function Header() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Add more", data.success);
-        if(data.success === "User Updated Successfully"){
+        if (data.success === "User Updated Successfully") {
           toast.success(data.success);
           localStorage.setItem("UserName", data.userName);
           setEditMode(false);
         } else {
-          toast.error("something went wrong updating user")
+          toast.error("something went wrong updating user");
         }
       })
       .catch((error) => {
@@ -86,19 +99,19 @@ function Header() {
     setEditMode(false);
   };
 
-   const handleLogout = () => {
+  const handleLogout = () => {
     // Clear user-related data from localStorage
     localStorage.removeItem("UserId");
     localStorage.removeItem("UserName");
     localStorage.removeItem("UserEmail");
     localStorage.removeItem("UserRole");
     localStorage.removeItem("UserActive");
-    
-    toast.success("Logout Successfully")
-    setUserIsOpen(false)
+
+    toast.success("Logout Successfully");
+    setUserIsOpen(false);
     // Redirect to the main page (assuming the main page path is "/")
     setTimeout(() => {
-    window.location.href = "/";
+      window.location.href = "/";
     }, 5000);
   };
 
@@ -124,9 +137,7 @@ function Header() {
               ) : (
                 <div>
                   <a href className="sign-in" onClick={toggleDropdown}>
-                    <span className="userName userName-container">
-                      WW
-                    </span>
+                    <span className="userName userName-container">WW</span>
                   </a>
                   {isUserOpen && (
                     <div className="dropdown-content">
@@ -142,15 +153,17 @@ function Header() {
                             <br />
                           </div>
                           <br />
-                          <div className="design">{editMode ? (
-                        <input
-                          type="text"
-                          value={userName}
-                          onChange={handleUserNameChange}
-                        />
-                      ) : (
-                        userName
-                      )}</div>
+                          <div className="design">
+                            {editMode ? (
+                              <input
+                                type="text"
+                                value={userName}
+                                onChange={handleUserNameChange}
+                              />
+                            ) : (
+                              userName
+                            )}
+                          </div>
                           <br />
                           <div className="design">{userEmail}</div>
                           <br />
@@ -165,10 +178,10 @@ function Header() {
                             <button onClick={handleUserName}>Edit Name</button>
                           )}
                         </div>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <div className="social1">
-                            <button onClick={handleLogout}>LogOut</button>
+                          <button onClick={handleLogout}>LogOut</button>
                         </div>
                       </div>
                     </div>

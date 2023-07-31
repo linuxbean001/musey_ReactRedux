@@ -92,6 +92,10 @@ function FeedBackBoard() {
         checkedObjects[index]?.includes(object)
       );
 
+      if (checkedObjects[index]?.includes("color")) {
+      objects.push("color");
+    }
+
       // If no objects are selected, show default text
       const selectedObjects =
         objects.length > 0 ? objects : ["No objects selected"];
@@ -110,7 +114,7 @@ function FeedBackBoard() {
       prompt: promtValue,
       images: Array.isArray(imageData) ? imageData : [],
     };
-    // console.log("Re-rendercombinedData:::--", combinedData);
+    console.log("combinedData",combinedData)
     const BASE_URL = "http://localhost:8000";
     const url = `${BASE_URL}/renderimages/`;
     fetch(url, {
@@ -122,7 +126,6 @@ function FeedBackBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-         console.log("re-renderAPIdata", data);
         if (data.status === "success") {
           setIsLoading(false);
           toast.success("Re-Render image Succesfully");
@@ -133,7 +136,6 @@ function FeedBackBoard() {
       })
       .catch((error) => {
         console.log("error", error);
-        //  setIsLoading(false);
       });
   };
 
@@ -168,6 +170,7 @@ function FeedBackBoard() {
       text: "Check out this image",
       url: image,
     };
+    console.log("shareData",shareData)
 
     if (navigator.share) {
       navigator
@@ -183,13 +186,10 @@ function FeedBackBoard() {
     }
   };
 
-  // console.log("renderdimages", renderdimages);
-
   const handleChange = (event) => {
     setPromtValue(event.target.value);
   };
 
-  //console.log("uploadImagesData :-", uploadImagesData);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -202,7 +202,6 @@ function FeedBackBoard() {
     const userRole = localStorage.getItem("user_role");
     let imagesData = localStorage.getItem("uploadedimagesdata");
     let imageShow = JSON.parse(imagesData); // Parse as array, default to empty array if null
-    // console.log("imageShow:", imageShow);
 
     const combinedData = {
       userid: Number(dataImage),
@@ -211,7 +210,6 @@ function FeedBackBoard() {
       prompt: promtValue,
       images: Array.isArray(imageShow) ? imageShow : [],
     };
-    //  console.log("combinedData:::--", combinedData);
     const BASE_URL = "http://localhost:8000";
     const url = `${BASE_URL}/renderimages/`;
     fetch(url, {
@@ -226,9 +224,7 @@ function FeedBackBoard() {
         if (data.status === "success") {
           setIsLoading(false);
           toast.success("Render image Succesfully");
-          //console.log("imgobjects:", data.imageswithobjects[0].imgobjects);
           setRenderdImage(data.generatedimages);
-          // setImageObject(data.imageswithobjects[0].imgobjects);
           setImageObject(data.imageswithobjects);
         } else {
           setIsLoading(false);
@@ -297,8 +293,6 @@ function FeedBackBoard() {
   };
 
   const handleUpload = () => {
-    // console.log(selectedImages)
-
     toast.success("Upload image response is processing...");
     const dataImage = localStorage.getItem("UserId");
     const MoodID = localStorage.getItem("moodid");
@@ -318,7 +312,6 @@ function FeedBackBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Add more", data.uploadedimages);
         toast.success("Image Upload Successful");
       })
       .catch((error) => {
