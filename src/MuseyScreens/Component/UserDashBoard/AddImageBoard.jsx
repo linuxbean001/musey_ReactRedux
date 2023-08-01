@@ -16,6 +16,7 @@ function AddImageBoard() {
   const [value, setValue] = useState("Untitled Image");
   const [uploadedImages, setUploadedImages] = useState([]);
   const [isButtonCSSClicked, setIsButtonCSSClicked] = useState(false);
+  
 
   const handleSave = (value) => {
     setValue(value);
@@ -84,11 +85,11 @@ function AddImageBoard() {
   const handleImageChange = (event) => {
     const files = event.target.files;
     const imagesArray = [];
-    const maxImages = 4; // Maximum number of images allowed
+    const maxImages = 4; 
 
     if (files.length > maxImages) {
       // Handle case when more than four images are selected
-      alert("Only up to four images can be uploaded");
+      toast.error("Only up to four images can be uploaded");
       return;
     }
 

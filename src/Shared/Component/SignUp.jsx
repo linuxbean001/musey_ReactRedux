@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
 });
 
   function SignUp({ isModalOpen, handleCloseModal }) {
-  const [roleUser, setRoleUser] = useState("pro");
+  const [roleUser, setRoleUser] = useState("free");
   const navigate = useNavigate();
   const { signup } = useContext(AuthContext);
   const authContext = useContext(AuthContext);

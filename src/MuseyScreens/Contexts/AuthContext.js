@@ -10,6 +10,9 @@ export const AuthProvider = ({ children }) => {
     !!localStorage.getItem("UserId")
   );
   const [user, setUser] = useState(null);
+  const toastData = {
+    autoClose: 1000,
+  };
 
   useEffect(() => {
     const getAccessTokenFromURL = () => {
@@ -63,16 +66,16 @@ export const AuthProvider = ({ children }) => {
         if (data.detail !== "Email already registered") {
           localStorage.setItem("user_role", data.role);
           toast.success(
-            "Please check your email and verify to use musey AI services"
+            "Please check your email and verify to use musey AI services",toastData
           );
           setUser(data.user); // Assuming the API returns the user object
         } else {
-          toast.error(data.detail);
+          toast.error(data.detail,toastData);
         }
       })
       .catch((error) => {
         console.error("API error:", error);
-        toast.error("Error occurred during sign up");
+        toast.error("Error occurred during sign up",toastData);
       });
   };
 
@@ -91,7 +94,7 @@ export const AuthProvider = ({ children }) => {
           })
             .then((response) => response.json())
             .then((result) => {
-              toast.success("Login successful!");
+              toast.success("Login successful!",toastData);
               setIsLoggedIn(true);
               setTimeout(() => {
                 window.location.href = "/yourboard";
@@ -106,26 +109,26 @@ export const AuthProvider = ({ children }) => {
               console.log("error", error);
             });
         } else {
-          toast.error(data.detail);
+          toast.error(data.detail,toastData);
         }
       })
       .catch((error) => {
         console.error("API error:", error);
-        toast.error("Incorrect email or password");
+        toast.error("Incorrect email or password",toastData);
       });
   };
 
   const handlePassword = (values) => {
     ForgotData(values)
       .then((data) => {
-        toast.success(data);
+        toast.success(data,toastData);
         // if (data === "password reset email sent") {
         //   window.location.href = "/passwordchange";
         // }
       })
       .catch((error) => {
         console.error("API error:", error);
-        toast.error("Error occurred during password reset");
+        toast.error("Error occurred during password reset",toastData);
       });
   };
 
