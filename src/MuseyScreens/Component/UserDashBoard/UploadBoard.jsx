@@ -46,7 +46,7 @@ function UploadBoard() {
   useEffect(() => {
     // Filter the mood boards whenever searchQuery changes
     const filteredData = moodBoardData.filter((item) =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase())
+      item.title.toLowerCase().includes(searchQuery.toLowerCase().trim())
     );
     setFilteredMoodBoardData(filteredData);
   }, [searchQuery, moodBoardData]);
@@ -149,6 +149,7 @@ function UploadBoard() {
                       aria-describedby="button-addon2"
                       class="form-control border-0 bg-light"
                       value={searchQuery}
+                      name="searchQuery"
                       onChange={handleChange}
                     />
                     {/* <div class="row">

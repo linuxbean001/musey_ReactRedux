@@ -26,6 +26,7 @@ function FeedBackBoard() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [progress, setProgress] = useState(0);
+  const [addMoreImage, setAddMoreImage] = useState([])
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -313,6 +314,11 @@ function FeedBackBoard() {
       .then((response) => response.json())
       .then((data) => {
         toast.success("Image Upload Successful");
+        // console.log("add more image",data.uploadedimages.images)
+        const AddMoreImage = data.uploadedimages.images ;
+        const newUploadImagesData = AddMoreImage.map((image) => `${baseUrl}${image}`);
+        setUploadImagesData((prevData) => [...prevData, ...newUploadImagesData]);
+        setAddMoreComponent(false)
       })
       .catch((error) => {
         console.log("error", error);
@@ -586,6 +592,7 @@ function FeedBackBoard() {
                 <div class="col-md-4">
                   <div class="trbwrap">
                     {/*---------------- Add more images section -------------------*/}
+                    
                     <Modal
                       size="lg"
                       aria-labelledby="contained-modal-title-vcenter"
@@ -595,7 +602,7 @@ function FeedBackBoard() {
                     >
                       {/* <div class="modal" id="myModal"> */}
                       <div class="modal-dialog">
-                        {uploadImagesData.length < 4 ? (
+                        
                           <div class="modal-content">
                             <div class="modal-header">
                               <h4 class="modal-title">Upload files</h4>
@@ -693,24 +700,12 @@ function FeedBackBoard() {
                               </div>
                             </div>
                           </div>
-                        ) : (
-                          <div class="modal-content">
-                            <div class="modal-body">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="NeonUpload Neon-upload-theme-dragdropbox">
-                                    <span style={{ color: "white" }}>
-                                      PLease Subscription
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                       
                       </div>
                       {/* </div> */}
                     </Modal>
+
+
                     <button onClick={handleClick} class="btn btn-primary">
                       Add more images
                     </button>
@@ -751,7 +746,7 @@ function FeedBackBoard() {
               <div class="row mt-4 redboarbtm">
                 {uploadImagesData.map((imageSrc, index) => (
                   <div class="col-md-3" key={index}>
-                    <div class="sag-top">
+                    <div class="sag-top1">
                       <div class="sagimagetp">
                         <img
                           src={imageSrc}
@@ -764,6 +759,7 @@ function FeedBackBoard() {
                 ))}
 
                 {/* Promt text value section*/}
+                <div style={{marginTop:"235px"}}>
                 <div
                   ref={inputRef}
                   class="vision-bar generaterbimg generaterbimgresults"
@@ -785,6 +781,7 @@ function FeedBackBoard() {
                   <a href class="btn btn-secondary" onClick={handleRenderImage}>
                     Generate
                   </a>
+                </div>
                 </div>
                 {/* Promt text value Section*/}
 

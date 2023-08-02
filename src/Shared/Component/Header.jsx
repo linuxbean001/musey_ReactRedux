@@ -11,6 +11,7 @@ import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isUserOpen, setUserIsOpen] = useState(false);
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
@@ -19,6 +20,24 @@ function Header() {
   const [userActive, setUserActive] = useState("");
   const [editMode, setEditMode] = useState(false); // State variable to track edit mode
   const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+  const closeDropdownOnOutsideClick = (event) => {
+    if (
+      isUserDropdownOpen &&
+      !event.target.closest(".dropdown-content") &&
+      !event.target.closest(".sign-in")
+    ) {
+      toggleDropdown();
+    }
+  };
+
+  document.addEventListener("click", closeDropdownOnOutsideClick);
+
+  return () => {
+    document.removeEventListener("click", closeDropdownOnOutsideClick);
+  };
+}, [isUserDropdownOpen]);
   
 
   useEffect(() => {
@@ -49,6 +68,7 @@ function Header() {
 
   const toggleDropdown = () => {
     setUserIsOpen(!isUserOpen);
+    setIsUserDropdownOpen(!isUserDropdownOpen);
   };
 
   const handleOpenModal = () => {
@@ -139,7 +159,7 @@ function Header() {
                   <a href className="sign-in" onClick={toggleDropdown}>
                     <span className="userName userName-container">WW</span>
                   </a>
-                  {isUserOpen && (
+                  {(isUserOpen && isUserDropdownOpen)  &&   (
                     <div className="dropdown-content">
                       {/* Add the dropdown content here */}
                       <div id="login-container">
@@ -153,7 +173,7 @@ function Header() {
                             <br />
                           </div>
                           <br />
-                          <div className="design">
+                          <div className="design dash">
                             {editMode ? (
                               <input
                                 type="text"

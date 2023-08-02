@@ -581,6 +581,13 @@ button.easy-edit-button {
   gap: 20px;
 }
 
+.sag-top1 {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: -270px;
+}
+
 .sagimagetp {
   /* background: #646a6a; */
   height: 615px;
@@ -1821,3 +1828,12 @@ section.procesSection {
   animation: spinner 0.8s linear infinite;
   margin: 0 auto;
 }
+
+
+.dash input[type="text"] {
+  background: none;
+  border: none;
+  color: #2afdfd;
+}
+
+        
