@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from "./MuseyScreens/Contexts/AuthContext"
+import { AuthContext } from "./MuseyScreens/Contexts/AuthContext";
 import Header from "./Shared/Component/Header";
 import MainPage from "./MuseyScreens/Component/LandingPages/MainPage";
 import FeedBackBoard from "./MuseyScreens/Component/UserDashBoard/FeedBackBoard";
@@ -13,6 +13,8 @@ import ImageRequestBoard from "./MuseyScreens/Component/UserDashBoard/ImageReque
 import ChangePassword from "./Shared/Component/ChangePassword";
 import LogOut from "./Shared/Component/LogOut";
 import StripeCheckout from "./StripeCheckout";
+import Success from "./Success";
+import Cancel from "./Cancel";
 
 // ProtectedRoute component to handle protected routes
 const ProtectedRoute = ({ element, redirectTo, condition }) => {
@@ -22,7 +24,7 @@ const ProtectedRoute = ({ element, redirectTo, condition }) => {
 function App() {
   const authContext = useContext(AuthContext);
   const isLoggedIn = authContext.isLoggedIn;
-  const userId = localStorage.getItem("UserId");  
+  const userId = localStorage.getItem("UserId");
 
   return (
     <div className="App">
@@ -90,9 +92,27 @@ function App() {
             path="/subscription"
             element={
               <ProtectedRoute
-                element={
-                  <StripeCheckout userId={userId} />
-                }
+                element={<StripeCheckout userId={userId} />}
+                redirectTo="/"
+                condition={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            path="/success"
+            element={
+              <ProtectedRoute
+                element={<Success />}
+                redirectTo="/"
+                condition={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            path="/cancel"
+            element={
+              <ProtectedRoute
+                element={<Cancel />}
                 redirectTo="/"
                 condition={isLoggedIn}
               />

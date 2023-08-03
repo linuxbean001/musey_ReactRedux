@@ -1,9 +1,11 @@
 import LogIn from "../../../Shared/Component/LogIn";
 import React, { useState } from "react";
 import "../../../Style.css";
+import { useNavigate } from "react-router";
 
 const HeroSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -12,6 +14,8 @@ const HeroSection = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  
 
   return (
     <section className="heroSection">
@@ -26,6 +30,7 @@ const HeroSection = () => {
             <button onClick={handleOpenModal} className="btn btn-primary width">
               LogIn
             </button>
+             
           </div>
           <LogIn
             isModalOpen={isModalOpen}
