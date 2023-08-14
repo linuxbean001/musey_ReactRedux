@@ -12,14 +12,14 @@ function UploadBoard() {
   const [editedTitle, setEditedTitle] = useState("");
   const [selectedMoodboardId, setSelectedMoodboardId] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const baseUrl = "http://localhost:8000/static/moodimages/";
+  const baseUrl = "http://www.musey.ai/api/static/moodimages/";
 
   useEffect(() => {
     const userId = localStorage.getItem("UserId");
     const combinedData = {
       id: userId,
     };
-    const BASE_URL = "http://localhost:8000";
+    const BASE_URL = "http://www.musey.ai/api";
     const url = `${BASE_URL}/usermoodboards/`;
     fetch(url, {
       method: "POST",
@@ -62,7 +62,7 @@ function UploadBoard() {
       title: editedTitle,
       moodboard_id: selectedMoodboardId,
     };
-    const BASE_URL = "http://localhost:8000";
+    const BASE_URL = "http://www.musey.ai/api";
     const url = `${BASE_URL}/updatemoodboard/`;
     fetch(url, {
       method: "POST",
@@ -98,7 +98,7 @@ function UploadBoard() {
     const combinedData = {
       moodboard_id: moodboardId,
     };
-    const BASE_URL = "http://localhost:8000";
+    const BASE_URL = "http://www.musey.ai/api";
     const url = `${BASE_URL}/deletemoodboard/`;
     fetch(url, {
       method: "POST",

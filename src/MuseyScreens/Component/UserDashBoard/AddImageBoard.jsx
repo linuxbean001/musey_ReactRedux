@@ -37,7 +37,7 @@ function AddImageBoard() {
       images: selectedImages,
       title: value,
     };
-    const BASE_URL = "http://localhost:8000";
+    const BASE_URL = "http://www.musey.ai/api";
     const url = `${BASE_URL}/creatmoodboard/`;
     fetch(url, {
       method: "POST",

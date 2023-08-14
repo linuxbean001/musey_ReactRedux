@@ -9,7 +9,7 @@ const StripeCheckout = ({ userId }) => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/create-checkout-session?userid=${userId}`
+        `http://www.musey.ai/api/create-checkout-session?userid=${userId}`
       );
 
       if (!response.ok) {

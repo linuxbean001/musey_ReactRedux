@@ -38,7 +38,7 @@ function ChangePassword() {
           password: values.password,
           token: token,
         };
-        const BASE_URL = "http://localhost:8000";
+        const BASE_URL = "http://www.musey.ai/api";
         const url = `${BASE_URL}/changepassword/`;
         fetch(url, {
           method: "POST",

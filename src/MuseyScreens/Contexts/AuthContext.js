@@ -30,12 +30,12 @@ export const AuthProvider = ({ children }) => {
 
     localStorage.setItem("LoginToken", accessToken);
     if (!urlParams.get("accesstoken")) {
-      window.open("http://localhost:8000/logingoogle/", "_self");
+      window.open("http://www.musey.ai/api/logingoogle/", "_self");
     }
 
     try {
       // Fetch user data from your backend using the access token
-      const BASE_URL = "http://localhost:8000";
+      const BASE_URL = "http://www.musey.ai/api";
       const apiUrl = `${BASE_URL}/user/?token=${encodeURIComponent(
         accessToken
       )}`;
@@ -84,7 +84,7 @@ export const AuthProvider = ({ children }) => {
       .then((data) => {
         if (data.access_token !== "") {
           const params = data.access_token;
-          const BASE_URL = "http://localhost:8000";
+          const BASE_URL = "http://www.musey.ai/api";
           const url = `${BASE_URL}/user/?token=${encodeURIComponent(params)}`;
           fetch(url, {
             method: "GET",

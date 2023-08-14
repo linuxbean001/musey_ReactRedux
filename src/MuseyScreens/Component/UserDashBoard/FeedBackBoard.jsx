@@ -43,7 +43,7 @@ function FeedBackBoard() {
     }
   }, []);
 
-  const baseUrl = "http://localhost:8000/static/moodimages/";
+  const baseUrl = "http://www.musey.ai/api/static/moodimages/";
 
   const showNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -116,7 +116,7 @@ function FeedBackBoard() {
       images: Array.isArray(imageData) ? imageData : [],
     };
     console.log("combinedData",combinedData)
-    const BASE_URL = "http://localhost:8000";
+    const BASE_URL = "http://www.musey.ai/api";
     const url = `${BASE_URL}/renderimages/`;
     fetch(url, {
       method: "POST",
@@ -211,7 +211,7 @@ function FeedBackBoard() {
       prompt: promtValue,
       images: Array.isArray(imageShow) ? imageShow : [],
     };
-    const BASE_URL = "http://localhost:8000";
+    const BASE_URL = "http://www.musey.ai/api";
     const url = `${BASE_URL}/renderimages/`;
     fetch(url, {
       method: "POST",
@@ -302,7 +302,7 @@ function FeedBackBoard() {
       userid: dataImage,
       moodboard_id: MoodID,
     };
-    const BASE_URL = "http://localhost:8000";
+    const BASE_URL = "http://www.musey.ai/api";
     const url = `${BASE_URL}/moodboardmoreimages/`;
     fetch(url, {
       method: "POST",
