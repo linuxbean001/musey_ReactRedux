@@ -19,21 +19,21 @@ function AdvanceRender() {
   }, [location.state]);
 
   return (
-    <div>
-      <div class="mainWraper">
-        <section class="rendering-board-section">
-          <div class="container">
+    <div style={{marginBottom : "5rem"}}>
+      <div className="mainWraper">
+        <section className="rendering-board-section">
+          <div className="container-fluid">
             <h2>Test renderings board</h2>
-            <div class="row">
-              <div class="col-md-8">
-                <p class="imagemsg">7 images in this board</p>
+            <div className="row">
+              <div className="col-md-8">
+                <p className="imagemsg">7 images in this board</p>
               </div>
-              <div class="col-md-4">
-                <div class="trbwrap">
-                  <button onClick={handleClick} class="btn btn-primary">
+              <div className="col-md-4">
+                <div className="trbwrap">
+                  <button onClick={handleClick} className="btn btn-primary">
                     Add more images
                   </button>
-                  <div class="dropdown">
+                  <div className="dropdown">
                     <a
                       href="#"
                       role="button"
@@ -45,17 +45,17 @@ function AdvanceRender() {
                     </a>
 
                     <ul
-                      class="dropdown-menu"
+                      className="dropdown-menu"
                       aria-labelledby="dropdownMenuLink"
                     >
-                      <li class="moreoption">More options</li>
+                      <li className="moreoption">More options</li>
                       <li>
-                        <a class="dropdown-item" href="#">
+                        <a className="dropdown-item" href="#">
                           Delete board
                         </a>
                       </li>
                       <li>
-                        <a class="dropdown-item" href="#">
+                        <a className="dropdown-item" href="#">
                           Share
                         </a>
                       </li>
@@ -65,7 +65,7 @@ function AdvanceRender() {
               </div>
             </div>
 
-            <div class="row mt-4 redboarbtm">
+            <div className="row mt-4 redboarbtm">
               {/* Image New Board */}
               {/* Render uploaded images */}
               {uploadImagesData.map((image, index) => (
@@ -79,18 +79,18 @@ function AdvanceRender() {
               ))}
               {/* Image New Board */}
 
-              <div class="vision-bar generaterbimg">
+              <div className="vision-bar generaterbimg">
                 <img src={"assests/MLogoIcon.png"} />
                 <span>Mountain landscape</span>
-                <a href class="btn btn-secondary">
+                <a href className="btn btn-secondary">
                   Generate
                 </a>
               </div>
 
-              <div class="advanced-option-bar">
-                <div class="dropdown">
+              <div className="advanced-option-bar">
+                <div className="dropdown">
                   <button
-                    class="btn btn-adoption dropdown-toggle"
+                    className="btn btn-adoption dropdown-toggle"
                     type="button"
                     id="dropdownMenu2"
                     data-bs-toggle="dropdown"
@@ -98,25 +98,25 @@ function AdvanceRender() {
                   >
                     Advanced options
                   </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <li>
-                      <button class="dropdown-item" type="button">
+                      <button className="dropdown-item" type="button">
                         <img src={"assests/Delete.png"} /> Landscape size only
                       </button>
                     </li>
                     <li>
-                      <button class="dropdown-item" type="button">
+                      <button className="dropdown-item" type="button">
                         <img src={"assests/Delete.png"} /> Portrait size only
                       </button>
                     </li>
                     <li>
-                      <button class="dropdown-item" type="button">
+                      <button className="dropdown-item" type="button">
                         <img src={"assests/Delete.png"} /> High resolution
                         (+2880px)
                       </button>
                     </li>
                     <li>
-                      <button class="dropdown-item" type="button">
+                      <button className="dropdown-item" type="button">
                         <img src={"assests/Delete.png"} /> Mixed ratios
                       </button>
                     </li>

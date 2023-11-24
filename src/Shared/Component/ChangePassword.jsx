@@ -4,8 +4,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const validationSchema = Yup.object().shape({
   password: Yup.string().required("Password is required"),
@@ -28,17 +28,15 @@ function ChangePassword() {
   }, []);
 
   const handleForgot = (values) => {
-    console.log("values", values);
     if (values != undefined) {
       const urlSearchParams = new URLSearchParams(window.location.search);
       const token = urlSearchParams.get("password");
-      console.log("token", token);
       if (token) {
         const combinedData = {
           password: values.password,
           token: token,
         };
-        const BASE_URL = "http://www.musey.ai/api";
+        const BASE_URL = "https://musey.ai/api";
         const url = `${BASE_URL}/changepassword/`;
         fetch(url, {
           method: "POST",
@@ -49,9 +47,9 @@ function ChangePassword() {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("data", data);
+            // console.log("data", data);
             if (data.status === "success") {
-              toast.success(data.message);
+              NotificationManager.success(data.message,"",2000);
               setTimeout(() => {
                 navigate("/");
               }, 2000);
@@ -123,7 +121,7 @@ function ChangePassword() {
         </form>
         {/* Rest of the form */}
       </div>
-      <ToastContainer />
+      <NotificationContainer />
     </>
   );
 }

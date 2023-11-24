@@ -51,7 +51,7 @@
               </div>
             </div>
             <button
-              class="btn btn-primary payment"
+              className="btn btn-primary payment"
               style={{ color: "white", backgroundColor: "green", margin: "10px auto" }}
               onClick={handlePageChange}
             >

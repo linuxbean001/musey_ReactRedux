@@ -4,8 +4,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 
 const validationSchema = Yup.object().shape({
@@ -20,7 +20,6 @@ function Forgot() {
 
 
   const handleForgot = (values) => {
-   toast.success("Forgot Password is Processing... ")
     forgot(values);
     navigate("/")
   };
@@ -65,7 +64,7 @@ function Forgot() {
       </form>
       {/* Rest of the form */}
     </div>
-    <ToastContainer />
+    <NotificationContainer />
     </>
   );
 }

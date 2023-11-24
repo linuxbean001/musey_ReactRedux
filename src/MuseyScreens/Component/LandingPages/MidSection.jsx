@@ -3,7 +3,7 @@ import React from "react";
 const MidSection = () => {
   return (
     <section className="midSection">
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-md-6">
             <h2>AI, AI, AI why so complicated</h2>

@@ -2,15 +2,14 @@ import React from "react";
 
 function ImageRequestBoard() {
   return (
-    <div>
+    <div style={{marginBottom:"10rem"}}>
       <div className="mainWraper">
         <section className="procesSection">
-          <div className="container">
+          <div className="container-fluid">
             <div className="processbox-row">
-              <div>
-                <img src={"assests/MLogoIcon-process.png"} alt="" />
+              <div style={{marginTop:"142px"}}>
                 <h3>Processing your request</h3>
-                <div class="processbox">
+                <div className="processbox">
                   <div className="loadermain"></div>
                 </div>
               </div>

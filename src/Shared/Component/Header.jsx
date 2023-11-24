@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import SignUp from "./SignUp";
 import { useLocation } from "react-router-dom";
 import FeedBackBoard from "../../MuseyScreens/Component/UserDashBoard/FeedBackBoard";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
+import Profile from "./Profile";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,23 +23,23 @@ function Header() {
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
-  const closeDropdownOnOutsideClick = (event) => {
-    if (
-      isUserDropdownOpen &&
-      !event.target.closest(".dropdown-content") &&
-      !event.target.closest(".sign-in")
-    ) {
-      toggleDropdown();
-    }
-  };
+    const closeDropdownOnOutsideClick = (event) => {
+      if (
+        isUserDropdownOpen &&
+        !event.target.closest(".dropdown-content") &&
+        !event.target.closest(".sign-in")
+      ) {
+        toggleDropdown();
+      }
+    };
 
-  document.addEventListener("click", closeDropdownOnOutsideClick);
+    document.addEventListener("click", closeDropdownOnOutsideClick);
 
-  return () => {
-    document.removeEventListener("click", closeDropdownOnOutsideClick);
-  };
-}, [isUserDropdownOpen]);
-  
+    return () => {
+      document.removeEventListener("click", closeDropdownOnOutsideClick);
+    };
+  }, [isUserDropdownOpen]);
+
 
   useEffect(() => {
     // Fetch the data from localStorage
@@ -92,7 +93,7 @@ function Header() {
       id: userId,
       name: userName,
     };
-    const BASE_URL = "http://www.musey.ai/api";
+    const BASE_URL = "https://musey.ai/api";
     const url = `${BASE_URL}/userupdate/`;
     fetch(url, {
       method: "POST",
@@ -103,13 +104,12 @@ function Header() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Add more", data.success);
         if (data.success === "User Updated Successfully") {
-          toast.success(data.success);
+          NotificationManager.success(data.success,"",2000);
           localStorage.setItem("UserName", data.userName);
           setEditMode(false);
         } else {
-          toast.error("something went wrong updating user");
+          NotificationManager.error("something went wrong updating user","",2000);
         }
       })
       .catch((error) => {
@@ -126,8 +126,10 @@ function Header() {
     localStorage.removeItem("UserEmail");
     localStorage.removeItem("UserRole");
     localStorage.removeItem("UserActive");
-
-    toast.success("Logout Successfully");
+   
+    setTimeout(()=>{
+    NotificationManager.success("Logout Successfully","",6000);
+    },2000)
     setUserIsOpen(false);
     // Redirect to the main page (assuming the main page path is "/")
     setTimeout(() => {
@@ -141,7 +143,7 @@ function Header() {
   return (
     <div>
       <section className="Menusection">
-        <div className="container">
+        <div className="container-fluid">
           <div className="menuHeader">
             <Sidebar />
             <div>
@@ -159,7 +161,7 @@ function Header() {
                   <a href className="sign-in" onClick={toggleDropdown}>
                     <span className="userName userName-container">WW</span>
                   </a>
-                  {(isUserOpen && isUserDropdownOpen)  &&   (
+                  {(isUserOpen && isUserDropdownOpen) && (
                     <div className="dropdown-content">
                       {/* Add the dropdown content here */}
                       <div id="login-container">
@@ -214,7 +216,9 @@ function Header() {
 
         <SignUp isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
       </section>
-      <ToastContainer />
+      <NotificationContainer />
+
+     
     </div>
   );
 }

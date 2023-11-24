@@ -1,13 +1,12 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef,useEffect } from "react";
 import "../../Style.css";
 import { Modal } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../MuseyScreens/Contexts/AuthContext";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from "react";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const validationSchema = Yup.object().shape({
   fname: Yup.string().required("FirstName is required"),
@@ -29,10 +28,19 @@ const validationSchema = Yup.object().shape({
   const { signup } = useContext(AuthContext);
   const authContext = useContext(AuthContext);
   const isMountedRef = useRef(true);
+  
+
+  
 
   const handleSubmit = (values) => {
-    toast.success("SignUp is processing!!");
-    signup(values);
+    const formData = {
+      name : values.name,
+      email: values.email,
+      hashed_password: values.hashed_password,
+      is_active: false,
+      role: values.role,
+    };
+    signup(formData);
     handleCloseModal();
   };
 
@@ -57,14 +65,14 @@ const validationSchema = Yup.object().shape({
     authContext.handleGoogleLogin()
       .then((isLoggedIn) => {
         if (isLoggedIn) {
-          toast.success("Login successful!");
+          // NotificationManager.success("Login successful!","",3000);
         } else {
-          toast.error("Login failed. Please try again.");
+          NotificationManager.error("Login failed. Please try again.","",2000);
         }
       })
       .catch((error) => {
         console.error("Google login error:", error);
-        toast.error("An error occurred during login.");
+        NotificationManager.error("An error occurred during login.","",2000);
       });
   };
 
@@ -221,7 +229,7 @@ const validationSchema = Yup.object().shape({
           </div>
         </div>
       </Modal>
-      <ToastContainer />
+      <NotificationContainer />
     </>
   );
 }

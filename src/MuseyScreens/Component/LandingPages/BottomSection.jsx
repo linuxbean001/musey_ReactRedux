@@ -3,7 +3,7 @@ import React from "react";
 const BottomSection = () => {
   return (
     <section className="bottomSection">
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-md-6">
             <h2>Stable Diffusion for not-so-dummies</h2>

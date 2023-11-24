@@ -10,9 +10,9 @@ function MainPage() {
   const isLoggedIn = authContext.isLoggedIn;
 
   // If the user is already logged in, redirect to the "yourboard" page
-  if (isLoggedIn) {
-    return <Navigate to="/yourboard" />;
-  }
+    if (isLoggedIn) {
+      return <Navigate to="/yourboard" />;
+    }
 
   // Otherwise, display the main page content
 

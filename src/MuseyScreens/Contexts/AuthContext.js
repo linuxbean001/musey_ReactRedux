@@ -1,7 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
 import { Register, loginData, ForgotData } from "../utils/api";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 export const AuthContext = createContext();
 
@@ -10,15 +13,12 @@ export const AuthProvider = ({ children }) => {
     !!localStorage.getItem("UserId")
   );
   const [user, setUser] = useState(null);
-  const toastData = {
-    autoClose: 1000,
-  };
 
   useEffect(() => {
     const getAccessTokenFromURL = () => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get("accesstoken")) {
-        handleGoogle();
+        handleGoogleLogin();
       }
     };
     getAccessTokenFromURL();
@@ -30,28 +30,30 @@ export const AuthProvider = ({ children }) => {
 
     localStorage.setItem("LoginToken", accessToken);
     if (!urlParams.get("accesstoken")) {
-      window.open("http://www.musey.ai/api/logingoogle/", "_self");
+      window.open("https://musey.ai/api/logingoogle/", "_self");
     }
 
     try {
       // Fetch user data from your backend using the access token
-      const BASE_URL = "http://www.musey.ai/api";
+      const BASE_URL = "https://musey.ai/api";
       const apiUrl = `${BASE_URL}/user/?token=${encodeURIComponent(
         accessToken
       )}`;
       const response = await fetch(apiUrl);
       const data = await response.json();
 
-      setUser(data);
-      setIsLoggedIn(true);
+      if (accessToken !== undefined) {
+        setUser(data);
+        setIsLoggedIn(true);
 
-      // Store user data in local storage or state as needed
-      localStorage.setItem("LoginToken", accessToken);
-      localStorage.setItem("UserId", data.UserId);
-      localStorage.setItem("UserName", data.userName);
-      localStorage.setItem("UserEmail", data.userEmail);
-      localStorage.setItem("UserRole", data.userRole);
-      localStorage.setItem("UserActive", data.useractive);
+        // Store user data in local storage or state as needed
+        localStorage.setItem("LoginToken", accessToken);
+        localStorage.setItem("UserId", data.UserId);
+        localStorage.setItem("UserName", data.userName);
+        localStorage.setItem("UserEmail", data.userEmail);
+        localStorage.setItem("UserRole", data.userRole);
+        localStorage.setItem("UserActive", data.useractive);
+      }
 
       return true; // Login successful
     } catch (error) {
@@ -65,17 +67,19 @@ export const AuthProvider = ({ children }) => {
       .then((data) => {
         if (data.detail !== "Email already registered") {
           localStorage.setItem("user_role", data.role);
-          toast.success(
-            "Please check your email and verify to use musey AI services",toastData
+          NotificationManager.success(
+            "Please check your email and verify to use musey AI services",
+            "",
+            2000
           );
           setUser(data.user); // Assuming the API returns the user object
         } else {
-          toast.error(data.detail,toastData);
+          NotificationManager.error(data.detail, "",2000);
         }
       })
       .catch((error) => {
         console.error("API error:", error);
-        toast.error("Error occurred during sign up",toastData);
+        NotificationManager.error("Error occurred during sign up", "",2000);
       });
   };
 
@@ -84,7 +88,7 @@ export const AuthProvider = ({ children }) => {
       .then((data) => {
         if (data.access_token !== "") {
           const params = data.access_token;
-          const BASE_URL = "http://www.musey.ai/api";
+          const BASE_URL = "https://musey.ai/api";
           const url = `${BASE_URL}/user/?token=${encodeURIComponent(params)}`;
           fetch(url, {
             method: "GET",
@@ -94,11 +98,8 @@ export const AuthProvider = ({ children }) => {
           })
             .then((response) => response.json())
             .then((result) => {
-              toast.success("Login successful!",toastData);
+              NotificationManager.success("Login successful!", "",2000);
               setIsLoggedIn(true);
-              setTimeout(() => {
-                window.location.href = "/yourboard";
-              }, 5000);
               localStorage.setItem("UserId", result.UserId);
               localStorage.setItem("UserName", result.userName);
               localStorage.setItem("UserEmail", result.userEmail);
@@ -109,26 +110,29 @@ export const AuthProvider = ({ children }) => {
               console.log("error", error);
             });
         } else {
-          toast.error(data.detail,toastData);
+          NotificationManager.error(data.detail, "",2000);
         }
       })
       .catch((error) => {
         console.error("API error:", error);
-        toast.error("Incorrect email or password",toastData);
+        NotificationManager.error("Incorrect email or password", "",2000);
       });
   };
 
   const handlePassword = (values) => {
     ForgotData(values)
       .then((data) => {
-        toast.success(data,toastData);
+        NotificationManager.success(data, "",2000);
         // if (data === "password reset email sent") {
         //   window.location.href = "/passwordchange";
         // }
       })
       .catch((error) => {
         console.error("API error:", error);
-        toast.error("Error occurred during password reset",toastData);
+        NotificationManager.error(
+          "Error occurred during password reset",
+          "",2000
+        );
       });
   };
 
@@ -143,7 +147,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={authContextValue}>
-      <ToastContainer />
+      <NotificationContainer />
       {children}
     </AuthContext.Provider>
   );

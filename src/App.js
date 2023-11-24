@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./MuseyScreens/Contexts/AuthContext";
 import Header from "./Shared/Component/Header";
 import MainPage from "./MuseyScreens/Component/LandingPages/MainPage";
-import FeedBackBoard from "./MuseyScreens/Component/UserDashBoard/FeedBackBoard";
+// import FeedBackBoard from "./MuseyScreens/Component/UserDashBoard/FeedBackBoard";
 import YourBoard from "./MuseyScreens/Component/UserDashBoard/YourBoard";
 import UploadBoard from "./MuseyScreens/Component/UserDashBoard/UploadBoard";
 import AddImageBoard from "./MuseyScreens/Component/UserDashBoard/AddImageBoard";
@@ -15,6 +15,8 @@ import LogOut from "./Shared/Component/LogOut";
 import StripeCheckout from "./StripeCheckout";
 import Success from "./Success";
 import Cancel from "./Cancel";
+import Profile from "./Shared/Component/Profile";
+import EditMoodboard from "./MuseyScreens/Component/UserDashBoard/EditMoodboard";
 
 // ProtectedRoute component to handle protected routes
 const ProtectedRoute = ({ element, redirectTo, condition }) => {
@@ -49,10 +51,30 @@ function App() {
             }
           />
           <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                element={<Profile />}
+                redirectTo="/"
+                condition={isLoggedIn}
+              />
+            }
+          />
+          <Route
             path="/uploadboard"
             element={
               <ProtectedRoute
                 element={<UploadBoard />}
+                redirectTo="/"
+                condition={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            path="/generateImage"
+            element={
+              <ProtectedRoute
+                element={<EditMoodboard />}
                 redirectTo="/"
                 condition={isLoggedIn}
               />
@@ -78,7 +100,7 @@ function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             path="/feedbackboard"
             element={
               <ProtectedRoute
@@ -87,7 +109,7 @@ function App() {
                 condition={isLoggedIn}
               />
             }
-          />
+          /> */}
           <Route
             path="/subscription"
             element={

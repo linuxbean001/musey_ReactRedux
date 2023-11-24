@@ -9,7 +9,7 @@ const StripeCheckout = ({ userId }) => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `http://www.musey.ai/api/create-checkout-session?userid=${userId}`
+        `https://musey.ai/api/create-checkout-session?userid=${userId}`
       );
 
       if (!response.ok) {
@@ -17,7 +17,6 @@ const StripeCheckout = ({ userId }) => {
       }
 
       const data = await response.json();
-      console.log("data", data);
 
       if (data.sessionId) {
         redirectToStripeCheckout(data.sessionId);
@@ -38,19 +37,19 @@ const StripeCheckout = ({ userId }) => {
     stripeScript.async = true;
 
     stripeScript.addEventListener("load", () => {
-      alert("Stripe script loaded.");
+      // alert("Stripe script loaded.");
 
       const stripe = window.Stripe(
-        "pk_test_51MniNtSGd0ho6TQXHQ8Puew9Z1Mk1WVkXRruOE4g58O8U5tdTWZsgWXjTAhH9RmWSgta4USqjd8NupY3KMtXXsFF00DBojq5zE"
+        "pk_live_51NfBerKd1jlKELx0VhjYn5Jk3urrinbaTdhz77jZS3JJCHh5Zn2Q2lrynhtb5OzEFGpXL7AZJIn649aBPQaVUuwT00oqHQuSO2"
       );
 
-      alert("Redirecting to Checkout...");
+      // alert("Redirecting to Checkout...");
       stripe
         .redirectToCheckout({ sessionId })
         .then((result) => {
           // Handle the redirection result
           console.log("Redirect result:", result);
-          alert("hii");
+          // alert("hii");
 
           if (result.error) {
             alert("Payment error:", result.error.message);

@@ -1,23 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import BannerImage from "../../../Shared/Component/BannerImage";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 import ImageRequestBoard from "./ImageRequestBoard";
-import { Modal } from "react-bootstrap";
+import { Modal, Form, Button } from "react-bootstrap";
 import ProgressBar from "react-bootstrap/ProgressBar";
 
 function FeedBackBoard() {
+  
   const [uploadImagesData, setUploadImagesData] = useState([]);
   const [promtValue, setPromtValue] = useState("");
-  const [renderdimages, setRenderdImage] = useState([]);
   const [reRenderdImages, setReRenderdImage] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [showExtraComponent, setShowExtraComponent] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [imageObject, setImageObject] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [checkedObjects, setCheckedObjects] = useState([]);
   const [finalSelectedObjects, setFinalSelectedObjects] = useState([]);
@@ -26,8 +28,56 @@ function FeedBackBoard() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [progress, setProgress] = useState(0);
-  const [addMoreImage, setAddMoreImage] = useState([])
+  const [addMoreImage, setAddMoreImage] = useState([]);
+  const [selectedDimension, setSelectedDimension] = useState(null);
   const inputRef = useRef(null);
+  const location = useLocation();
+  const isUploadButtonDisabled = selectedImages.length === 0;
+  const isPromptButtonDisabled = promtValue.length === 0;
+  console.log("isPromptButtonDisabled", isPromptButtonDisabled);
+  const initialImageObject =
+    (location.state && location.state.imageObject) || [];
+  const initialRenderedImages =
+    (location.state && location.state.renderdimages) || [];
+
+  const [imageObject, setImageObject] = useState(
+    initialImageObject ? initialImageObject : []
+  );
+
+  const [renderdimages, setRenderdImage] = useState(
+    initialRenderedImages ? initialRenderedImages : []
+  );
+
+  const handleAdvancedOptionClick = (dimension) => {
+    setSelectedDimension(dimension);
+  };
+
+  const getDimensionsForOption = (dimensionOption) => {
+    // Define standard dimensions for each option (width, height)
+    const dimensions = {
+      landscape: { width: 1024, height: 768 },
+      portrait: { width: 768, height: 1024 },
+      high_resolution: { width: 2880, height: 2160 },
+      mixed_ratios: { width: 1280, height: 720 }, // Modify as needed
+    };
+
+    return dimensions[dimensionOption] || null;
+  };
+
+  const selectedDimensions = getDimensionsForOption(selectedDimension);
+  console.log("dimension", selectedDimensions);
+
+  useEffect(() => {
+    if (location.state && location.state.imageObject) {
+      setImageObject(location.state.imageObject);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    if (location.state && location.state.renderdimages) {
+      setRenderdImage(location.state.renderdimages);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     // Scroll to the input element when the component mounts
@@ -43,7 +93,7 @@ function FeedBackBoard() {
     }
   }, []);
 
-  const baseUrl = "http://www.musey.ai/api/static/moodimages/";
+  const baseUrl = "https://www.musey.ai/api/static/moodimages/";
 
   const showNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -74,7 +124,11 @@ function FeedBackBoard() {
   const handleDoneClick = () => {
     setIsLoading(true);
     setIsModalOpen(false);
-    toast.success("Re-Render image response is processing...");
+    NotificationManager.success(
+      "Re-Render image response is processing...",
+      "",
+      2000
+    );
     // Collect all the selected objects from all images and store them in finalSelectedObjects state
     const allSelectedObjects = checkedObjects.flat();
     setFinalSelectedObjects(allSelectedObjects);
@@ -94,8 +148,8 @@ function FeedBackBoard() {
       );
 
       if (checkedObjects[index]?.includes("color")) {
-      objects.push("color");
-    }
+        objects.push("color");
+      }
 
       // If no objects are selected, show default text
       const selectedObjects =
@@ -115,8 +169,7 @@ function FeedBackBoard() {
       prompt: promtValue,
       images: Array.isArray(imageData) ? imageData : [],
     };
-    console.log("combinedData",combinedData)
-    const BASE_URL = "http://www.musey.ai/api";
+    const BASE_URL = "https://musey.ai/api";
     const url = `${BASE_URL}/renderimages/`;
     fetch(url, {
       method: "POST",
@@ -129,10 +182,10 @@ function FeedBackBoard() {
       .then((data) => {
         if (data.status === "success") {
           setIsLoading(false);
-          toast.success("Re-Render image Succesfully");
+          NotificationManager.success("Re-Render image Succesfully", "", 2000);
           setReRenderdImage(data.generatedimages);
         } else {
-          toast.error(data.error);
+          NotificationManager.error(data.error, "", 2000);
         }
       })
       .catch((error) => {
@@ -171,7 +224,6 @@ function FeedBackBoard() {
       text: "Check out this image",
       url: image,
     };
-    console.log("shareData",shareData)
 
     if (navigator.share) {
       navigator
@@ -191,18 +243,13 @@ function FeedBackBoard() {
     setPromtValue(event.target.value);
   };
 
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const handleRenderImage = () => {
     setIsLoading(true);
-    toast.success("Render image response is processing...");
-
     const dataImage = localStorage.getItem("UserId");
     const MoodID = localStorage.getItem("moodid");
-    const userRole = localStorage.getItem("user_role");
+    const userRole = localStorage.getItem("UserRole");
     let imagesData = localStorage.getItem("uploadedimagesdata");
-    let imageShow = JSON.parse(imagesData); // Parse as array, default to empty array if null
+    let imageShow = JSON.parse(imagesData);
 
     const combinedData = {
       userid: Number(dataImage),
@@ -211,7 +258,7 @@ function FeedBackBoard() {
       prompt: promtValue,
       images: Array.isArray(imageShow) ? imageShow : [],
     };
-    const BASE_URL = "http://www.musey.ai/api";
+    const BASE_URL = "https://musey.ai/api";
     const url = `${BASE_URL}/renderimages/`;
     fetch(url, {
       method: "POST",
@@ -224,12 +271,11 @@ function FeedBackBoard() {
       .then((data) => {
         if (data.status === "success") {
           setIsLoading(false);
-          toast.success("Render image Succesfully");
           setRenderdImage(data.generatedimages);
           setImageObject(data.imageswithobjects);
-        } else {
+        } else if (data.status === "error") {
+          NotificationManager.error(data.error, "", 2000);
           setIsLoading(false);
-          toast.error(data.error);
         }
       })
       .catch((error) => {
@@ -238,22 +284,43 @@ function FeedBackBoard() {
       });
   };
 
-  const handleClick = () => {
+  // useEffect(()=>{
+  //   const dataAb =  searchParams.get("edit")
+  //   if(dataAb === 'editImage') {
+  //     handleRenderImage();
+  //   }
+  // },[])
+
+  const handleClickAddMoreImages = () => {
     setAddMoreComponent(true);
   };
 
   const CloseModal = () => {
     setAddMoreComponent(false);
+    setSelectedImages("");
   };
 
   const handleAddMoreImageChange = (event) => {
+    const userRole = localStorage.getItem("UserRole");
     const files = event.target.files;
     const imagesArray = [];
-    const maxImages = 4; // Maximum number of images allowed
+    const maxImages = 4;
 
     if (files.length > maxImages) {
-      // Handle case when more than four images are selected
-      alert("Only up to four images can be uploaded");
+      NotificationManager.error(
+        "Only up to four images can be uploaded",
+        "",
+        2000
+      );
+      return;
+    }
+
+    if (userRole === 'free' && uploadImagesData.length + files.length > 8) {
+      NotificationManager.error(
+        "Free users can only upload up to 8 images",
+        "",
+        2000
+      );
       return;
     }
 
@@ -293,8 +360,7 @@ function FeedBackBoard() {
     height: "10px",
   };
 
-  const handleUpload = () => {
-    toast.success("Upload image response is processing...");
+  const handleUploadMoreImages = () => {
     const dataImage = localStorage.getItem("UserId");
     const MoodID = localStorage.getItem("moodid");
     const combinedData = {
@@ -302,7 +368,7 @@ function FeedBackBoard() {
       userid: dataImage,
       moodboard_id: MoodID,
     };
-    const BASE_URL = "http://www.musey.ai/api";
+    const BASE_URL = "https://musey.ai/api";
     const url = `${BASE_URL}/moodboardmoreimages/`;
     fetch(url, {
       method: "POST",
@@ -313,12 +379,24 @@ function FeedBackBoard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        toast.success("Image Upload Successful");
-        // console.log("add more image",data.uploadedimages.images)
-        const AddMoreImage = data.uploadedimages.images ;
-        const newUploadImagesData = AddMoreImage.map((image) => `${baseUrl}${image}`);
-        setUploadImagesData((prevData) => [...prevData, ...newUploadImagesData]);
-        setAddMoreComponent(false)
+        NotificationManager.success("Image Upload Successful", "", 2000);
+        setSelectedImages([]);
+
+        const AddMoreImage = data.uploadedimages.images;
+        // const newUploadImagesData = AddMoreImage.map(
+        //   (image) => `${baseUrl}${image.image_url}`
+        // );
+
+        const dataMore = data.uploadedimages.images;
+        setUploadImagesData((prevData) => [...prevData, ...AddMoreImage]);
+        //-------------------- add more new data -------------------//
+        const storedData =
+          JSON.parse(localStorage.getItem("uploadedimagesdata")) || [];
+        const updatedData = [...storedData, ...dataMore];
+        localStorage.setItem("uploadedimagesdata", JSON.stringify(updatedData));
+        //-------------------- add more new data -------------------//
+        setSelectedImages("");
+        setAddMoreComponent(false);
       })
       .catch((error) => {
         console.log("error", error);
@@ -326,27 +404,29 @@ function FeedBackBoard() {
   };
 
   useEffect(() => {
-    const uploadedImagesDatas = location.state?.uploadedImages;
-    if (uploadedImagesDatas) {
-      setUploadImagesData(uploadedImagesDatas);
+    const storedImages = localStorage.getItem("uploadedimagesdata");
+    if (storedImages) {
+      setUploadImagesData(JSON.parse(storedImages));
     }
-  }, [location.state]);
+  }, []);
+
+
 
   return (
     <div>
       {isLoading ? (
         <ImageRequestBoard />
       ) : (
-        <div class="mainWraper">
+        <div className="mainWraper">
           <BannerImage />
-          <section class="rendering-board-section">
-            <div class="container">
+          <section className="rendering-board-section">
+            <div className="container-fluid">
               {/* <h2>Test renderings board</h2> */}
-              <div class="row mt-4">
+              <div className="row mt-4">
                 {renderdimages.length > 0 ? (
-                  <div class="col-md-12">
-                    {/* <small class="show-results">Showing results for:</small>  */}
-                    <p class="imagemsg">Test renderings board</p>
+                  <div className="col-md-12">
+                    {/* <small className="show-results">Showing results for:</small>  */}
+                    <p className="imagemsg">Test renderings board</p>
                   </div>
                 ) : (
                   ""
@@ -355,13 +435,13 @@ function FeedBackBoard() {
                 {reRenderdImages.length > 0
                   ? // Re-rendered image
                     reRenderdImages.map((image, index) => (
-                      <div class="col-6 col-xl-3" key={index}>
-                        <div class="showreslutboximg">
+                      <div className="col-6 col-xl-3" key={index}>
+                        <div className="showreslutboximg">
                           <img src={image} alt="" />
                           <a
                             onClick={() => handleShow(image)}
                             href
-                            class="onovrshow"
+                            className="onovrshow"
                           >
                             <img src={"assests/download.png"} alt="" />
                           </a>
@@ -371,13 +451,13 @@ function FeedBackBoard() {
                   : // Render image section
                     renderdimages.length > 0 &&
                     renderdimages.map((image, index) => (
-                      <div class="col-6 col-xl-3" key={index}>
-                        <div class="showreslutboximg">
+                      <div className="col-6 col-xl-3" key={index}>
+                        <div className="showreslutboximg">
                           <img src={image} alt="" />
                           <a
                             onClick={() => handleShow(image)}
                             href
-                            class="onovrshow"
+                            className="onovrshow"
                           >
                             <img src={"assests/download.png"} alt="" />
                           </a>
@@ -386,12 +466,12 @@ function FeedBackBoard() {
                     ))}
                 {/* End of conditionally render renderdimages section */}
 
-                <div class="col-md-12">
-                  <div class="satisfybox">
+                <div className="col-md-12">
+                  <div className="satisfybox">
                     {renderdimages.length > 0 ? (
                       <div>
                         <p>Are you satisfied with these results?</p>
-                        <div class="satisfyicon">
+                        <div className="satisfyicon">
                           <a href>
                             <img src={"assests/satisfy.png"} alt="" />
                           </a>
@@ -439,11 +519,11 @@ function FeedBackBoard() {
                       style={{ float: "right" }}
                     />
                   </span>
-                  <div class="modal-dialog">
-                    <div class="modal-content">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
                       {/*<!-- Modal Header -->*/}
-                      <div class="modal-header border-bottom-0">
-                        <h4 class="modal-title">
+                      <div className="modal-header border-bottom-0">
+                        <h4 className="modal-title">
                           What did you like about this image?
                         </h4>
                       </div>
@@ -452,16 +532,19 @@ function FeedBackBoard() {
                       {/* <!-- Modal body -->*/}
                       {imageObject.length > 0 && (
                         <>
-                          <div key={currentImage.image_id} class="modal-body">
-                            <div class="row">
+                          <div
+                            key={currentImage.image_id}
+                            className="modal-body"
+                          >
+                            <div className="row">
                               {/* image_id */}
-                              {/* <small class="show-results mb-3">
+                              {/* <small className="show-results mb-3">
                                 Image Id : {currentImage.image_id}
                               </small> */}
                               {/* image_id */}
-                              <div class="col-md-6">
+                              <div className="col-md-6">
                                 {/* imageurl  */}
-                                <div class="continuemodalboximg">
+                                <div className="continuemodalboximg">
                                   <img
                                     src={baseUrl + currentImage.imageurl}
                                     alt={`Image ${currentImage.image_id}`}
@@ -469,7 +552,7 @@ function FeedBackBoard() {
                                 </div>
                                 {/* imageurl  */}
                               </div>
-                              <div class="col-md-6">
+                              <div className="col-md-6">
                                 <div>
                                   {currentImage.imgobjects.map(
                                     (object, index) => (
@@ -516,11 +599,11 @@ function FeedBackBoard() {
                                     name=""
                                   />
                                 </div>
-                                <div class="c-btb-wrap">
+                                <div className="c-btb-wrap">
                                   {!isLastImage && (
                                     <a
                                       href
-                                      class="btn btn-primary"
+                                      className="btn btn-primary"
                                       onClick={showNextImage}
                                     >
                                       Next image
@@ -529,7 +612,7 @@ function FeedBackBoard() {
                                   {isLastImage && (
                                     <a
                                       href
-                                      class="btn btn-primary primary-border"
+                                      className="btn btn-primary primary-border"
                                       onClick={handleDoneClick}
                                     >
                                       Done
@@ -585,14 +668,14 @@ function FeedBackBoard() {
                   </div>
                 </Modal>
               </div>
-              <div class="row">
-                <div class="col-md-8">
+              <div className="row">
+                <div className="col-md-8">
                   {/* <p class="imagemsg">7 images in this board</p> */}
                 </div>
-                <div class="col-md-4">
-                  <div class="trbwrap">
+                <div className="col-md-4">
+                  <div className="trbwrap">
                     {/*---------------- Add more images section -------------------*/}
-                    
+
                     <Modal
                       size="lg"
                       aria-labelledby="contained-modal-title-vcenter"
@@ -600,82 +683,87 @@ function FeedBackBoard() {
                       show={addMoreComponent}
                       className="modal open addImage"
                     >
-                      {/* <div class="modal" id="myModal"> */}
-                      <div class="modal-dialog">
-                        
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h4 class="modal-title">Upload files</h4>
-                              {/* <a href="" class="" data-bs-dismiss="modal"> */}
-                              <span
-                                onClick={CloseModal}
-                                className=""
-                                data-bs-dismiss="modal"
-                              >
-                                <img src={"assests/close.png"} alt="Close" />
-                              </span>
-                              {/* </a> */}
-                            </div>
-                            <div class="modal-body">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="NeonUpload Neon-upload-theme-dragdropbox">
-                                    <input
-                                      style={{
-                                        cursor: "pointer",
-                                        zIndex: 999,
-                                        opacity: 0,
-                                        width: "320px",
-                                        height: "200px",
-                                        position: "absolute",
-                                        right: "0px",
-                                        left: "0px",
-                                        marginRight: "auto",
-                                        marginLeft: "auto",
-                                      }}
-                                      onChange={handleAddMoreImageChange}
-                                      name="files[]"
-                                      id="filer_input2"
-                                      multiple="multiple"
-                                      type="file"
-                                      accept="image/*"
-                                    />
-                                    {selectedImages.length > 0 ? (
-                                      selectedImages.map((image, index) => (
-                                        <img
-                                          key={index}
-                                          src={
-                                            image
-                                              ? image
-                                              : "assests/UploadArea.png"
-                                          }
-                                          alt={`Image ${index}`}
-                                          style={{
-                                            maxWidth: "100%",
-                                            height: "auto",
-                                            display: "block",
-                                            marginBottom: "10px",
-                                          }}
-                                        />
-                                      ))
-                                    ) : (
+                      {/* <div className="modal" id="myModal"> */}
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h4 className="modal-title">Upload files</h4>
+                            {/* <a href="" className="" data-bs-dismiss="modal"> */}
+                            <span
+                              onClick={CloseModal}
+                              className=""
+                              data-bs-dismiss="modal"
+                            >
+                              <img src={"assests/close.png"} alt="Close" />
+                            </span>
+                            {/* </a> */}
+                          </div>
+                          <div className="modal-body">
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="NeonUpload Neon-upload-theme-dragdropbox">
+                                  <input
+                                    style={{
+                                      cursor: "pointer",
+                                      zIndex: 999,
+                                      opacity: 0,
+                                      width: "320px",
+                                      height: "200px",
+                                      position: "absolute",
+                                      right: "0px",
+                                      left: "0px",
+                                      marginRight: "auto",
+                                      marginLeft: "auto",
+                                    }}
+                                    onChange={handleAddMoreImageChange}
+                                    name="files[]"
+                                    id="filer_input2"
+                                    multiple="multiple"
+                                    type="file"
+                                    accept="image/*"
+                                  />
+                                  {selectedImages.length > 0 ? (
+                                    selectedImages.map((image, index) => (
                                       <img
-                                        src={"assests/UploadArea.png"}
-                                        alt="Upload Area"
+                                        key={index}
+                                        src={
+                                          image
+                                            ? image
+                                            : "assests/UploadArea.png"
+                                        }
+                                        alt={`Image ${index}`}
                                         style={{
                                           maxWidth: "100%",
                                           height: "auto",
                                           display: "block",
+                                          marginBottom: "10px",
                                         }}
                                       />
-                                    )}
-                                  </div>
+                                    ))
+                                  ) : (
+                                    <img
+                                      src={"assests/UploadArea.png"}
+                                      alt="Upload Area"
+                                      style={{
+                                        maxWidth: "100%",
+                                        height: "auto",
+                                        display: "block",
+                                      }}
+                                    />
+                                  )}
                                 </div>
-                                <div class="col-md-6">
-                                  <div class="randomeimgbox">
-                                    {selectedImages.map((image, index) => (
+                              </div>
+                              <div className="col-md-6">
+                                <div className="randomeimgbox">
+                                  {Array.isArray(selectedImages) &&
+                                    selectedImages.length > 0 &&
+                                    selectedImages.map((image, index) => (
                                       <div className="progresss" key={index}>
-                                        <p>{selectedFiles[index].name}</p>
+                                        <p>
+                                          {selectedFiles[index]
+                                            ? selectedFiles[index].name
+                                            : "Unnamed File"}
+                                        </p>
                                         <ProgressBar
                                           now={progress}
                                           style={progressBarStyle}
@@ -684,34 +772,36 @@ function FeedBackBoard() {
                                         />
                                       </div>
                                     ))}
-                                    <br />
-                                    <button
-                                      class="btn btn-primary width"
-                                      style={{
-                                        padding: "10px",
-                                        marginTop: "5px",
-                                      }}
-                                      onClick={handleUpload}
-                                    >
-                                      Upload Add MoreImages
-                                    </button>
-                                  </div>
+                                  <br />
+                                  <button
+                                    className="btn btn-primary width"
+                                    style={{
+                                      padding: "10px",
+                                      marginTop: "5px",
+                                    }}
+                                    onClick={handleUploadMoreImages}
+                                    disabled={isUploadButtonDisabled}
+                                  >
+                                    Upload Add MoreImages
+                                  </button>
                                 </div>
                               </div>
                             </div>
                           </div>
-                       
+                        </div>
                       </div>
                       {/* </div> */}
                     </Modal>
 
-
-                    <button onClick={handleClick} class="btn btn-primary">
+                    <button
+                      onClick={handleClickAddMoreImages}
+                      className="btn btn-primary"
+                    >
                       Add more images
                     </button>
                     {/*---------------- Add more images section -------------------*/}
 
-                    {/* <div class="dropdown">
+                    {/* <div className="dropdown">
                       <a
                         href="#"
                         role="button"
@@ -723,10 +813,10 @@ function FeedBackBoard() {
                       </a>
 
                       <ul
-                        class="dropdown-menu"
+                        className="dropdown-menu"
                         aria-labelledby="dropdownMenuLink"
                       >
-                        <li class="moreoption">More options</li>
+                        <li className="moreoption">More options</li>
                         <li>
                           <a className="dropdown-item" href="#">
                             Delete board
@@ -743,13 +833,13 @@ function FeedBackBoard() {
                 </div>
               </div>
               {/*-------------------- MoodBoard Images --------------------*/}
-              <div class="row mt-4 redboarbtm">
+              <div className="row mt-4 redboarbtm">
                 {uploadImagesData.map((imageSrc, index) => (
-                  <div class="col-md-3" key={index}>
-                    <div class="sag-top1">
-                      <div class="sagimagetp">
+                  <div className="col-md-3" key={index}>
+                    <div className="sag-top1">
+                      <div className="sagimagetp">
                         <img
-                          src={imageSrc}
+                          src={baseUrl + imageSrc.image_url}
                           alt=""
                           className="fixed-size-image"
                         />
@@ -759,36 +849,46 @@ function FeedBackBoard() {
                 ))}
 
                 {/* Promt text value section*/}
-                <div style={{marginTop:"235px"}}>
-                <div
-                  ref={inputRef}
-                  class="vision-bar generaterbimg generaterbimgresults"
-                >
-                  <img src={"assests/MLogoIcon.png"} alt="" />
-                  <input
+                <div style={{ marginTop: "235px" }}>
+                  <div
                     ref={inputRef}
-                    type="text"
-                    value={promtValue}
-                    onChange={handleChange}
-                    placeholder="Firstly Enter Promt text"
-                    style={{
-                      border: "none",
-                      ":hover": {
-                        border: "1px solid white",
-                      },
-                    }}
-                  />
-                  <a href class="btn btn-secondary" onClick={handleRenderImage}>
-                    Generate
-                  </a>
-                </div>
+                    className="vision-bar generaterbimg generaterbimgresults"
+                  >
+                    <img src={"assests/MLogoIcon.png"} alt="" />
+                    <Form.Control
+                      ref={inputRef}
+                      type="text"
+                      value={promtValue}
+                      onChange={handleChange}
+                      placeholder="Firstly Enter Promt text"
+                      style={{
+                        border: "none",
+                        boxShadow: "none",
+                        ":hover": {
+                          border: "1px solid white",
+                        },
+                      }}
+                    />
+                    <Button
+                      className="btn btn-secondary"
+                      onClick={handleRenderImage}
+                      style={{
+                        backgroundColor: "#2afdfd",
+                        color: "black",
+                        border: "none",
+                      }}
+                      disabled={isPromptButtonDisabled}
+                    >
+                      Generate
+                    </Button>
+                  </div>
                 </div>
                 {/* Promt text value Section*/}
 
-                <div class="advanced-option-bar">
-                  <div class="dropdown">
+                <div className="advanced-option-bar">
+                  <div className="dropdown">
                     <button
-                      class="btn btn-adoption dropdown-toggle"
+                      className="btn btn-adoption dropdown-toggle"
                       type="button"
                       id="dropdownMenu2"
                       data-bs-toggle="dropdown"
@@ -796,27 +896,50 @@ function FeedBackBoard() {
                     >
                       Advanced options
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenu2"
+                    >
                       <li>
-                        <button class="dropdown-item" type="button">
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={() => handleAdvancedOptionClick("landscape")}
+                        >
                           <img src={"assests/Delete.png"} alt="" /> Landscape
                           size only
                         </button>
                       </li>
                       <li>
-                        <button class="dropdown-item" type="button">
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={() => handleAdvancedOptionClick("portrait")}
+                        >
                           <img src={"assests/Delete.png"} alt="" /> Portrait
                           size only
                         </button>
                       </li>
                       <li>
-                        <button class="dropdown-item" type="button">
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={() =>
+                            handleAdvancedOptionClick("high_resolution")
+                          }
+                        >
                           <img src={"assests/Delete.png"} alt="" /> High
                           resolution (+2880px)
                         </button>
                       </li>
                       <li>
-                        <button class="dropdown-item" type="button">
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={() =>
+                            handleAdvancedOptionClick("mixed_ratios")
+                          }
+                        >
                           <img src={"assests/Delete.png"} alt="" /> Mixed ratios
                         </button>
                       </li>
@@ -827,9 +950,11 @@ function FeedBackBoard() {
               {/*-------------------- MoodBoard Images --------------------*/}
             </div>
           </section>
+
+
         </div>
       )}
-      <ToastContainer />
+      <NotificationContainer />
     </div>
   );
 }

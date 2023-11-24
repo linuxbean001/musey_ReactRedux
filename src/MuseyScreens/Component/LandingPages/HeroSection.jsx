@@ -19,7 +19,7 @@ const HeroSection = () => {
 
   return (
     <section className="heroSection">
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12 col-lg-6">
             <h1>A picture is worth a thousand words</h1>

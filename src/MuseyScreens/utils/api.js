@@ -1,5 +1,4 @@
-const BASE_URL = "http://www.musey.ai/api"; // Update with your API base URL
-// const BASE_URL1 =  "http://localhost:8000";
+const BASE_URL = "https://musey.ai/api"; // Update with your API base URL
 
 export const Register = async (userData) => {
   const response = await fetch(`${BASE_URL}/signup/`, {
